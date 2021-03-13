@@ -1,0 +1,23 @@
+Last.fm API key
+
+Application name: Advanced Statistics
+API Key: d3b15cefdfc22c908467b6972ad2f661
+Secret: 7b19984b99a8adc71f718a696991c7b7
+Registered to: rikishiyayo
+
+
+What this app will do ? Advanced statistics.
+    - Artist discovery - which artists did you discover in a specific time period, number of scrobbles, list of discovered albums of this artist...
+    - Album discovery - which albums did you discover in a specific time period, number of scrobbles...
+    - Which artists/albums/tracks did user scrobble x times the fastest ? (a line chart would be cool).
+      E.g. album Samsara was scrobbled 600 times in 31 days, album Planetary Clairvoyance was scrobbled 600 times in 1 year
+    - Top artists/albums/tracks by scrobble time
+    - Top albums by rate of how evenly the album was scrobbled. I.e it distinguished between albums where majority of scrobbles comes from 20% of songs
+      and where scrbbles were more evenly distributed between every song
+
+
+Details to implementation:
+    - I will most probably need to store some(probably lots of data) in local storage or something like that. so it is persisted forever on user machine
+      and I don't need to download the data every time statistics are generated(that would be probably not ok with last.fm, overloading their api)
+    - 
+

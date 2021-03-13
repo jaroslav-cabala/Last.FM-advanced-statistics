@@ -1,0 +1,11 @@
+{
+  "name": "lastfm-advanced-statistics",
+  "version": "1.0.0",
+  "description": "An application that provides more detailed last.fm scrobbling statistics",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "author": "Jaroslav Cabala",
+  "license": "ISC"
+}
