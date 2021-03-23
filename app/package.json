@@ -4,8 +4,15 @@
   "description": "An application that provides more detailed last.fm scrobbling statistics",
   "main": "index.js",
   "scripts": {
-    "test": "test"
+    "start": ".\\node_modules\\.bin\\light-server -s . -w \"**/*.js, home.html # # reload\""
   },
   "author": "Jaroslav Cabala",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "lodash-es": "^4.17.21",
+    "rxjs": "^6.6.6"
+  },
+  "devDependencies": {
+    "light-server": "^2.9.1"
+  }
 }
