@@ -1,0 +1,41 @@
+import { Album, Artist, Scrobble } from "../models/lastFM.js";
+import { ScrobbledTracks } from "./scrobblesDownloader.js";
+
+export function deserializeGetRecentTracksResponse(serializedScrobbledTracks) {
+  const scrobbledTracks = new ScrobbledTracks(
+    serializedScrobbledTracks.recenttracks["@attr"].page,
+    serializedScrobbledTracks.recenttracks
+  );
+
+  return getScrobbleRecords(scrobbledTracks.recentTracks.track);
+}
+
+function createScrobbleRecord(scrobbledTrack) {
+  let album = new Album(
+    scrobbledTrack.album.mbid,
+    scrobbledTrack.album["#text"]
+  );
+  let artist = new Artist(
+    scrobbledTrack.artist.id,
+    scrobbledTrack.artist["#text"]
+  );
+  let scrobble = new Scrobble(
+    scrobbledTrack.mbid,
+    scrobbledTrack.name,
+    album,
+    artist,
+    scrobbledTrack.url,
+    scrobbledTrack?.date?.uts
+  );
+
+  return scrobble;
+}
+
+function getScrobbleRecords(scrobbledTracks) {
+  const result = [];
+  for (const track of scrobbledTracks) {
+    result.push(createScrobbleRecord(track));
+  }
+
+  return result;
+}
