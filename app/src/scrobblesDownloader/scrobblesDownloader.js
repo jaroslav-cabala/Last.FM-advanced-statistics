@@ -2,12 +2,10 @@ import { get } from "../httpRequest/http.js";
 import { Observable } from "../../node_modules/rxjs/_esm2015/index.js";
 import { deserializeGetRecentTracksResponse } from "../scrobblesDownloader/deserializer.js";
 import {
-  toArray,
   map,
   reduce,
 } from "../../node_modules/rxjs/_esm2015/internal/operators/index.js";
 
-const requestFailed = "Error! request to get scrobbled tracks failed!";
 const resourceUri =
   "https://ws.audioscrobbler.com/2.0/?format=json&method=user.getRecentTracks&limit=200&user=rikishiyayo&from&to&api_key=d3b15cefdfc22c908467b6972ad2f661";
 
@@ -17,9 +15,8 @@ async function getOnePageOfRecentTracks(pageNumber) {
   ]);
   console.log(`got page ${pageNumber} of recent tracks from last.fm`);
   return response.json();
-
-  // console.log(`PAGE ${data.recenttracks["@attr"].page} - `, data.recenttracks);
 }
+
 function getRecentTracks$(numberOfRequestToBeSent) {
   return new Observable(async (observer) => {
     let request = 1;
@@ -50,15 +47,8 @@ function getRecentTracks$(numberOfRequestToBeSent) {
 export function getScrobbles$(numberOfRequestToBeSent) {
   return getRecentTracks$(numberOfRequestToBeSent).pipe(
     map((scrobbles) => deserializeGetRecentTracksResponse(scrobbles)),
-    reduce((accumulatorArray, currentValue) => accumulatorArray.concat(currentValue))
+    reduce((accumulatorArray, currentValue) =>
+      accumulatorArray.concat(currentValue)
+    )
   );
-}
-
-export class ScrobbledTracks {
-  page;
-  recentTracks;
-  constructor(page, recentTracks) {
-    this.page = page;
-    this.recentTracks = recentTracks;
-  }
 }

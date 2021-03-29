@@ -1,5 +1,5 @@
-import { Album, Artist, Scrobble } from "../models/lastFM.js";
-import { ScrobbledTracks } from "./scrobblesDownloader.js";
+import { Scrobble } from "../models/lastFMApiResponses.js";
+import { ScrobbledTracks, Artist, Album } from "../models/domain.js";
 
 export function deserializeGetRecentTracksResponse(serializedScrobbledTracks) {
   const scrobbledTracks = new ScrobbledTracks(
@@ -11,15 +11,17 @@ export function deserializeGetRecentTracksResponse(serializedScrobbledTracks) {
 }
 
 function createScrobbleRecord(scrobbledTrack) {
-  let album = new Album(
-    scrobbledTrack.album.mbid,
-    scrobbledTrack.album["#text"]
-  );
-  let artist = new Artist(
+  const artist = new Artist(
     scrobbledTrack.artist.id,
     scrobbledTrack.artist["#text"]
   );
-  let scrobble = new Scrobble(
+  const album = new Album(
+    scrobbledTrack.album.mbid,
+    scrobbledTrack.album["#text"],
+    artist,
+    
+  );
+  const scrobble = new Scrobble(
     scrobbledTrack.mbid,
     scrobbledTrack.name,
     album,
