@@ -2,9 +2,11 @@
   "name": "lastfm-advanced-statistics",
   "version": "1.0.0",
   "description": "An application that provides more detailed last.fm scrobbling statistics",
-  "main": "index.js",
+  "private": "true",
   "scripts": {
-    "start": ".\\node_modules\\.bin\\light-server -s . -w \"**/*.js, home.html # # reload\""
+    "create-bundle": "npx webpack --mode=development",
+    "start-server": ".\\node_modules\\.bin\\light-server -s . -w \"**/*.js, home.html # # reload\"",
+    "serve": "npm run create-bundle && npm run start-server"
   },
   "author": "Jaroslav Cabala",
   "license": "ISC",
@@ -14,6 +16,8 @@
     "rxjs": "^6.6.6"
   },
   "devDependencies": {
-    "light-server": "^2.9.1"
+    "light-server": "^2.9.1",
+    "webpack": "^5.30.0",
+    "webpack-cli": "^4.6.0"
   }
 }

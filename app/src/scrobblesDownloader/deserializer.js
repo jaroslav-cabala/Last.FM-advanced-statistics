@@ -1,13 +1,16 @@
 import { Scrobble } from "../models/lastFMApiResponses.js";
 import { ScrobbledTracks, Artist, Album } from "../models/domain.js";
 
-export function deserializeGetRecentTracksResponse(serializedScrobbledTracks) {
+/*
+ * deserializes an array of scrobbled tracks - from array of json object to array of object of type Scrobble
+ */
+export function deserializeGetRecentTracksResponse(recentTracks) {
   const scrobbledTracks = new ScrobbledTracks(
-    serializedScrobbledTracks.recenttracks["@attr"].page,
-    serializedScrobbledTracks.recenttracks
+    recentTracks.attr.page,
+    recentTracks.tracks
   );
 
-  return getScrobbleRecords(scrobbledTracks.recentTracks.track);
+  return getScrobbleRecords(scrobbledTracks.recentTracks);
 }
 
 function createScrobbleRecord(scrobbledTrack) {

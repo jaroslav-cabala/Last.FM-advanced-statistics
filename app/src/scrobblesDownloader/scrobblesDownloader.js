@@ -1,54 +1,46 @@
-import { get } from "../httpRequest/http.js";
-import { Observable } from "../../node_modules/rxjs/_esm2015/index.js";
-import { deserializeGetRecentTracksResponse } from "../scrobblesDownloader/deserializer.js";
+import { EMPTY, from, defer, range } from "../../node_modules/rxjs/_esm2015/index.js";
 import {
+  catchError,
+  concatMap,
   map,
   reduce,
+  delay,
+  retryWhen,
+  tap
 } from "../../node_modules/rxjs/_esm2015/internal/operators/index.js";
+
+import { get } from "../httpRequest/http.js";
+import { deserializeGetRecentTracksResponse } from "../scrobblesDownloader/deserializer.js";
+import { RecentTracks } from "../models/lastFMApiResponses.js";
+import { dump, getCurrentTimeString } from "../common.js";
 
 const resourceUri =
   "https://ws.audioscrobbler.com/2.0/?format=json&method=user.getRecentTracks&limit=200&user=rikishiyayo&from&to&api_key=d3b15cefdfc22c908467b6972ad2f661";
 
-async function getOnePageOfRecentTracks(pageNumber) {
-  const response = await get(resourceUri, [
-    { name: "page", value: pageNumber },
-  ]);
-  console.log(`got page ${pageNumber} of recent tracks from last.fm`);
-  return response.json();
-}
+function getOnePageOfRecentTracks$(pageNumber) {
+  dump(`${getCurrentTimeString()} - Getting ${pageNumber}. page of scrobbles`);
 
-function getRecentTracks$(numberOfRequestToBeSent) {
-  return new Observable(async (observer) => {
-    let request = 1;
-    let errorCount = 0;
-    while (request <= numberOfRequestToBeSent) {
-      try {
-        const data = await getOnePageOfRecentTracks(request);
-        observer.next(data);
-
-        request++;
-        errorCount = 0;
-      } catch (error) {
-        if (errorCount > 3) {
-          observer.error(
-            `ERROR: getting scrobbled tracks failed multiple times!\n Original error: ${error}`
-          );
-        } else {
-          errorCount++;
-          console.log(`${error}\n
-          Trying again...`);
-        }
-      }
-    }
-    observer.complete();
-  });
+  const promise = get(resourceUri, [{ name: "page", value: pageNumber }]);
+  return defer(() => from(promise)).pipe(
+    concatMap((response) => response.json()),
+    map((data) => new RecentTracks(data.recenttracks["@attr"], data.recenttracks.track)),
+    // tap(() => dump(`${getCurrentTimeString()} - ${pageNumber}. page of scrobbles obtained!`)), // does not work :(
+    retryWhen(() => {
+      let retryCount = 1;
+      return range(1, 3).pipe(
+        concatMap((val) => of(1).pipe(delay(val * 2000))),
+        tap(() => dump(`${dumpCurrentTime()} - retrying ${retryCount++}. time...`))
+      );
+    }),
+    delay(3000),
+  );
 }
 
 export function getScrobbles$(numberOfRequestToBeSent) {
-  return getRecentTracks$(numberOfRequestToBeSent).pipe(
-    map((scrobbles) => deserializeGetRecentTracksResponse(scrobbles)),
-    reduce((accumulatorArray, currentValue) =>
-      accumulatorArray.concat(currentValue)
-    )
+  return range(1, numberOfRequestToBeSent).pipe(
+    concatMap((page) => getOnePageOfRecentTracks$(page)),
+    catchError(() => EMPTY),
+    map((recentTracks) => deserializeGetRecentTracksResponse(recentTracks)),
+    reduce((accumulatorArray, currentValue) => accumulatorArray.concat(currentValue))
   );
 }
