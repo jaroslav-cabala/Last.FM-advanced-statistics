@@ -1,5 +1,5 @@
-import { timer } from "../../node_modules/rxjs/_esm2015/index.js";
-import { finalize, mergeMap } from "../../node_modules/rxjs/_esm2015/internal/operators/index.js";
+import { timer } from "../node_modules/rxjs/_esm2015/index.js";
+import { finalize, mergeMap } from "../node_modules/rxjs/_esm2015/internal/operators/index.js";
 
 export const getCurrentTimeString = () => {
   const date = new Date();
@@ -16,7 +16,8 @@ export const retryStrategy = (
       const retryCount = index + 1;
 
       if (retryCount > retryStrategyArguments.maxTryAttemps)
-        throw Error(`Request failed after ${retryStrategyArguments.maxTryAttemps} retry attempts...`);
+        throw Error(`Request failed after ${retryStrategyArguments.maxTryAttemps} retry attempts.\n
+          Original error: ${error}`);
 
       const retryDelay = retryStrategyArguments.retryDelay(retryCount);
       dump(`${getCurrentTimeString()} - retrying ${retryCount}. time in ${retryDelay}ms`);
