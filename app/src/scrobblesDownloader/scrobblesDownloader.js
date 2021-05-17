@@ -32,16 +32,14 @@ function getOnePageOfRecentTracks$(pageNumber) {
 
   const random = Math.floor(Math.random() * 4);
 
-  const promise = get(resourceUris[random], [{ name: "page", value: pageNumber }]);
-
-  return defer(() => from(get(resourceUris[random], [{ name: "page", value: pageNumber }]))).pipe(
+  return defer(() => from(get(resourceUri, [{ name: "page", value: pageNumber }]))).pipe(
     concatMap(inspectFetchResponse),
     map((data) => new RecentTracks(data.recenttracks["@attr"], data.recenttracks.track)),
     tap({
       next: () => dump([`${pageNumber}. page of scrobbles obtained!`]),
     }),
     retryWhen(retryStrategy()),
-    delay(2000)
+    delay(500)
   );
 }
 
