@@ -2,7 +2,7 @@ import { Scrobble } from "../models/lastFMApiResponses.js";
 import { ScrobbledTracks, Artist, Album } from "../models/domain.js";
 
 /*
- * deserializes an array of scrobbled tracks - from array of json object to array of object of type Scrobble
+ * Deserializes an array of scrobbled tracks - from array of json object to array of object of type Scrobble.
  */
 export function deserializeGetRecentTracksResponse(recentTracks) {
   const scrobbledTracks = new ScrobbledTracks(recentTracks.attr.page, recentTracks.tracks);

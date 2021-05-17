@@ -1,12 +1,12 @@
 import { timer } from "../node_modules/rxjs/_esm2015/index.js";
-import { finalize, mergeMap } from "../node_modules/rxjs/_esm2015/internal/operators/index.js";
+import { mergeMap } from "../node_modules/rxjs/_esm2015/internal/operators/index.js";
 
 export const getCurrentTimeString = () => {
   const date = new Date();
   return `${date.getHours()}h:${date.getMinutes()}m:${date.getSeconds()}s:${date.getMilliseconds()}`;
 };
 
-export const dump = (message) => console.log(message);
+export const dump = (messages) => console.log(`${getCurrentTimeString()}: `, ...messages);
 
 export const retryStrategy = (
   retryStrategyArguments = { maxTryAttemps: 3, retryDelay: (retryAttempt) => Math.pow(2, retryAttempt) * 1000 }
@@ -20,9 +20,25 @@ export const retryStrategy = (
           Original error: ${error}`);
 
       const retryDelay = retryStrategyArguments.retryDelay(retryCount);
-      dump(`${getCurrentTimeString()} - retrying ${retryCount}. time in ${retryDelay}ms`);
+      dump([`Retrying ${retryCount}. time in ${retryDelay}ms`]);
       return timer(retryDelay);
-    }),
-    finalize(() => dump(`${getCurrentTimeString()} - Retry is done!`))
+    })
   );
 };
+
+/*
+ * Finds page number in provided string using regular expression.
+ * Returns the page number if the provided string contains exactly 1 match,
+ * otherwise returns null.
+ */
+export const findPageNumber = (paragraph) => {
+  const regex = /(?<=&page=)\d+(?=&|$)/g;
+  const found = regexFindMatchInString(regex, paragraph);
+
+  if (found?.length === 1) {
+    return found[0];
+  }
+  return null;
+};
+
+const regexFindMatchInString = (regexExpression, paragraph) => paragraph.match(regexExpression);
