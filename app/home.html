@@ -9,8 +9,16 @@
   </head>
   <body>
     <p>Last.FM-advanced-statistics testing page</p>
+    <br />
+    <p>
+      LOCAL STORAGE OF YOUR SCROBBLES: <span id="localStorageContent"></span><br />
+      <span>STATUS: </span><span id="status"></span>
+    </p>
+
     <button id="btnDownloadScrobbles">DOWNLOAD SCROBBLES</button><br />
     <button id="btnDumpDownloadedScrobbles">DUMP DOWNLOADED SCROBBLES FROM LOCAL STORAGE</button><br />
     <textarea id="textArea" readonly></textarea>
+
+    <button id="testUpdating">TEST UPDATING OF SCROBBLES JSON</button>
   </body>
 </html>

@@ -1,6 +1,11 @@
 import { Observable, timer } from "rxjs";
 import { mergeMap } from "rxjs/operators";
 
+export const getDateStringFromUts = (uts: string, locale: string = "en-GB"): string => {
+  const date = new Date(parseInt(uts + "000"));
+  return date.toLocaleString(locale);
+};
+
 export const getCurrentTimeString = (): string => {
   const date = new Date();
   return `${date.getHours()}h:${date.getMinutes()}m:${date.getSeconds()}s:${date.getMilliseconds()}`;

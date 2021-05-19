@@ -1,44 +1,76 @@
-import { getScrobbles$ } from "./scrobblesDownloader/scrobblesDownloader.js";
-import { dump } from "./common.js";
-import { DownloadInfo, ScrobbledTrack } from "./models/domain.js";
-import { Subscription } from "rxjs";
+import { dump } from "./common";
+import { Scrobbles, User } from "./models/domain";
+import { downloadNewScrobbles, downloadScrobbles } from "./scrobbleLibraryManagement/downloadManager";
+import {
+  addScrobbles,
+  clearStorage,
+  getScrobblesJSONString,
+  getStorageStatusInfoJSON,
+  getStorageStatusInfoJSONString,
+  isStorageEmpty,
+  saveScrobbles,
+  saveStorageStatusInfo,
+} from "./scrobbleLibraryManagement/storageManager";
+import { testScrobbles } from "./files/testScrobbles";
+import { numberOfRecentTrackPagesToDownload, recentTracksPageSize, username } from "./appConfiguration";
+import { getUserInfo } from "./scrobbleLibraryManagement/downloaders/userInfo";
 
-console.log(
-  `Hi, I am starting a process of downloading all scrobbles. It will take a while
-    (depending on the amount of scrobbles)...`
-);
+let user: User;
+clearStorage();
+userInfo();
 
-localStorage.removeItem("scrobbles");
-localStorage.removeItem("downloadInfo");
-
-function downloadScrobbles(): Subscription {
-  return getScrobbles$(2).subscribe({
-    next: processScrobbles,
-    error: (err) => dump([`error in getScrobbles$ - ${err}`]),
-    complete: () => dump([`getScrobbles$ completed!`]),
-  });
-}
-
-function processScrobbles(scrobbles: ScrobbledTrack[]) {
-  // console.table(scrobbles);
-  dump(["Downloaded scrobbles: ", scrobbles.length]);
-  localStorage.setItem("scrobbles", JSON.stringify(scrobbles));
-  localStorage.setItem("downloadInfo", JSON.stringify(new DownloadInfo(scrobbles)));
+async function userInfo() {
+  user = await getUserInfo(username);
 }
 
 var button = document.querySelector("#btnDumpDownloadedScrobbles");
 button?.addEventListener("click", function () {
   const scrobbles = JSON.parse(
-    localStorage.getItem("scrobbles") || `{ "Error": "property 'scrobbles' not found in localStorage" }`
+    getScrobblesJSONString() || `{ "Error": "property 'scrobbles' not found in localStorage" }`
   );
-  const downloadInfo = JSON.parse(
-    localStorage.getItem("downloadInfo") || `{ "Error": "property downloadInfo not found in localStorage" }`
-  );
-  dump(["scrobbles: ", scrobbles, "downloadInfo: ", downloadInfo]);
+  const storageStatusInfo =
+    getStorageStatusInfoJSONString() || "Error: property storageStatusInfo not found in localStorage";
+  dump(["scrobbles: ", scrobbles, "storageStatusInfo: ", storageStatusInfo]);
 
   var textArea = <Element>document.querySelector("#textArea");
   textArea.textContent = JSON.stringify(scrobbles);
 });
 
 var button = document.querySelector("#btnDownloadScrobbles");
-button?.addEventListener("click", () => downloadScrobbles());
+button?.addEventListener("click", () => {
+  startDownloadingScrobbles();
+});
+
+async function startDownloadingScrobbles(): Promise<void> {
+  if (isStorageEmpty()) {
+    downloadScrobbles(numberOfRecentTrackPagesToDownload, processScrobbles);
+  } else {
+    const downloadedScrobbles = getStorageStatusInfoJSON().scrobblesDownloaded;
+    const pagesToDownload = Math.ceil((user.totalScrobbles - downloadedScrobbles) / recentTracksPageSize);
+
+    downloadNewScrobbles(pagesToDownload, user.totalScrobbles - downloadedScrobbles, processNewScrobbles);
+  }
+}
+
+function processScrobbles(scrobbles: Scrobbles) {
+  dump(["Downloaded scrobbles: ", scrobbles.length]);
+  saveScrobbles(scrobbles);
+  saveStorageStatusInfo(scrobbles, user.totalScrobbles);
+
+  var localStorageContent = <Element>document.querySelector("#localStorageContent");
+  localStorageContent.textContent = getStorageStatusInfoJSONString();
+}
+
+function processNewScrobbles(scrobbles: Scrobbles) {
+  dump(["Downloaded new scrobbles: ", scrobbles.length]);
+  addScrobbles(scrobbles);
+  // saveStorageStatusInfo(scrobbles, user.totalScrobbles);
+
+  var localStorageContent = <Element>document.querySelector("#localStorageContent");
+  localStorageContent.textContent = getStorageStatusInfoJSONString();
+}
+
+var button = document.querySelector("#testUpdating");
+button?.addEventListener("click", function () {
+  addScrobbles(testScrobbles);
+});

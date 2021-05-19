@@ -2,6 +2,16 @@ export interface GetRecentTracksResponse {
   recenttracks: RecentTracks;
 }
 
+export interface GetUserInfoResponse {
+  user: UserInfo;
+}
+
+export interface UserInfo {
+  name: string;
+  playcount: number;
+  url: string;
+}
+
 export interface RecentTracks {
   "@attr": Attr;
   track: Track[];

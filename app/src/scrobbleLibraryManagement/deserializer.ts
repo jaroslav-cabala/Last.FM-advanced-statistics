@@ -1,5 +1,5 @@
-import { Artist, Album, ScrobbledTrack } from "../models/domain.js";
-import { RecentTracks, Track } from "../models/lastFMApiResponses.js";
+import { Artist, Album, ScrobbledTrack } from "../models/domain";
+import { RecentTracks, Track } from "../models/lastFMApiResponses";
 
 /*
  * Deserializes an array of scrobbled tracks - from array of json object to array of object of type Scrobble.

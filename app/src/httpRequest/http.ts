@@ -1,6 +1,22 @@
-export function get(uri: string, additionalParams: Record<string, string>[]) {
+import { dump, findPageNumber } from "../common";
+
+export function get(uri: string, additionalParams: Record<string, string>[] = []) {
   for (const param of additionalParams) {
     uri += `&${param.name}=${param.value}`;
   }
   return fetch(uri);
 }
+
+/*
+ * Looks at a fetch response. If the response is not OK(status code 200, 2**), throws an error.
+ * If it is OK, returns a Promise that resolves to the response content in json
+ */
+export const inspectFetchResponse = async (response: Response): Promise<any> => {
+  if (response.ok) {
+    return response.json();
+  }
+
+  const { message } = await response.json();
+  dump([`Getting ${findPageNumber(response.url)}. page failed: `, response.status, message]);
+  throw new Error(message);
+};

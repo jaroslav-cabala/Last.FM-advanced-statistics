@@ -4,7 +4,7 @@
   "description": "An application that provides more detailed last.fm scrobbling statistics",
   "private": "true",
   "scripts": {
-    "compile": "npx tsc",
+    "compile": "npx tsc --watch",
     "create-bundle": "npx webpack",
     "start-server": ".\\node_modules\\.bin\\light-server -s . -w \"**/*.js, home.html # # reload\"",
     "serve": "npm run create-bundle && npm run start-server"
