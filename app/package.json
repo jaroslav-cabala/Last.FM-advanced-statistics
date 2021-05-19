@@ -4,9 +4,10 @@
   "description": "An application that provides more detailed last.fm scrobbling statistics",
   "private": "true",
   "scripts": {
-    "compile": "npx tsc --watch",
-    "create-bundle": "npx webpack",
-    "start-server": ".\\node_modules\\.bin\\light-server -s . -w \"**/*.js, home.html # # reload\"",
+    "clean-dist": "npx rimraf ./compiledJs, ./dist",
+    "compile": "npx tsc",
+    "create-bundle": "npm run clean-dist && npm run compile && npx webpack",
+    "start-server": ".\\node_modules\\.bin\\light-server --config light-server.config.json",
     "serve": "npm run create-bundle && npm run start-server"
   },
   "author": "Jaroslav Cabala",
@@ -18,6 +19,7 @@
   },
   "devDependencies": {
     "light-server": "^2.9.1",
+    "rimraf": "^3.0.2",
     "typescript": "^4.2.4",
     "webpack": "^5.30.0",
     "webpack-cli": "^4.6.0"

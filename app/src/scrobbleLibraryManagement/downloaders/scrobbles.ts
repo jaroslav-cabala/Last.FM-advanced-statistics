@@ -27,7 +27,7 @@ export function getScrobbles$(numberOfRequestToBeSent: number): Observable<Scrob
 function getOnePageOfRecentTracks$(pageNumber: number): Observable<RecentTracks> {
   dump([`Getting ${pageNumber}. page of scrobbles`]);
 
-  const random = Math.floor(Math.random() * 4);
+  // const random = Math.floor(Math.random() * 4);
 
   return defer(() =>
     from(get(getRecentTracksResourceUri, [{ name: "page", value: pageNumber.toString() }]))

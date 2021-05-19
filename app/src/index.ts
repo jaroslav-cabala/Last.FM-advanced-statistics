@@ -20,7 +20,11 @@ clearStorage();
 userInfo();
 
 async function userInfo() {
-  user = await getUserInfo(username);
+  try {
+    user = await getUserInfo(username);
+  } catch (error) {
+    dump(["Downloading user info from last.fm failed! Error: ", error]);
+  }
 }
 
 var button = document.querySelector("#btnDumpDownloadedScrobbles");

@@ -1,4 +1,4 @@
-import { dump, findPageNumber } from "../common";
+import { dump } from "../common";
 
 export function get(uri: string, additionalParams: Record<string, string>[] = []) {
   for (const param of additionalParams) {
@@ -17,6 +17,6 @@ export const inspectFetchResponse = async (response: Response): Promise<any> => 
   }
 
   const { message } = await response.json();
-  dump([`Getting ${findPageNumber(response.url)}. page failed: `, response.status, message]);
+  dump([`Request ${response.url} failed: `, response.status, message]);
   throw new Error(message);
 };
