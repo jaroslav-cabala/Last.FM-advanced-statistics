@@ -1,16 +1,19 @@
-import { timer } from "../node_modules/rxjs/_esm2015/index.js";
-import { mergeMap } from "../node_modules/rxjs/_esm2015/internal/operators/index.js";
+import { Observable, timer } from "rxjs";
+import { mergeMap } from "rxjs/operators";
 
-export const getCurrentTimeString = () => {
+export const getCurrentTimeString = (): string => {
   const date = new Date();
   return `${date.getHours()}h:${date.getMinutes()}m:${date.getSeconds()}s:${date.getMilliseconds()}`;
 };
 
-export const dump = (messages) => console.log(`${getCurrentTimeString()}: `, ...messages);
+export const dump = (messages: unknown[]): void => console.log(`${getCurrentTimeString()}: `, ...messages);
 
 export const retryStrategy = (
-  retryStrategyArguments = { maxTryAttemps: 3, retryDelay: (retryAttempt) => Math.pow(2, retryAttempt) * 1000 }
-) => (attempts) => {
+  retryStrategyArguments = {
+    maxTryAttemps: 3,
+    retryDelay: (retryAttempt: number) => Math.pow(2, retryAttempt) * 1000,
+  }
+) => (attempts: any): Observable<number> => {
   return attempts.pipe(
     mergeMap((error, index) => {
       const retryCount = index + 1;
@@ -31,7 +34,7 @@ export const retryStrategy = (
  * Returns the page number if the provided string contains exactly 1 match,
  * otherwise returns null.
  */
-export const findPageNumber = (paragraph) => {
+export const findPageNumber = (paragraph: string): string | null => {
   const regex = /(?<=&page=)\d+(?=&|$)/g;
   const found = regexFindMatchInString(regex, paragraph);
 
@@ -41,4 +44,4 @@ export const findPageNumber = (paragraph) => {
   return null;
 };
 
-const regexFindMatchInString = (regexExpression, paragraph) => paragraph.match(regexExpression);
+const regexFindMatchInString = (regexExpression: RegExp, paragraph: string) => paragraph.match(regexExpression);

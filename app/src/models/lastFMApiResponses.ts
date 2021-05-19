@@ -1,6 +1,10 @@
+export interface GetRecentTracksResponse {
+  recenttracks: RecentTracks;
+}
+
 export interface RecentTracks {
-  attr: Attr;
-  tracks: ScrobbledTrack[];
+  "@attr": Attr;
+  track: Track[];
 }
 
 export interface Attr {
@@ -11,29 +15,22 @@ export interface Attr {
   user: string;
 }
 
-export interface Album {
-  mbid: string;
-  text: string;
-}
-
-export interface Artist {
-  mbid: string;
-  text: string;
-}
-
-export class ScrobbledTrack {
+export interface Track {
+  "@attr"?: { nowplaying: string };
   mbid: string;
   name: string;
   album: Album;
   artist: Artist;
   url: string;
-  date: string;
-  constructor(mbid: string, name: string, album: Album, artist: Artist, url: string, date: string) {
-    this.mbid = mbid;
-    this.name = name;
-    this.album = album;
-    this.artist = artist;
-    this.url = url;
-    this.date = date;
-  }
+  date?: { uts: string; "#text": string };
+}
+
+export interface Album {
+  mbid: string;
+  "#text": string;
+}
+
+export interface Artist {
+  mbid: string;
+  "#text": string;
 }
