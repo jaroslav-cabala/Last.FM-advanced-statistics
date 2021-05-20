@@ -46,14 +46,18 @@ function extractUnsavedScrobbles(scrobbles: Scrobbles, newScrobblesCount: number
   newScrobbles = scrobbles.slice(0, newScrobblesCount);
   const duplicates = scrobbles.slice(newScrobblesCount);
 
-  const isFirstDroppedScrobbleEqualToLatestStoredScrobble = ScrobbledTrack.AreScrobblesEqual(
-    duplicates[0],
-    latestDownloadedScrobble
-  );
+  let isFirstDroppedScrobbleEqualToLatestStoredScrobble = true;
+  if (scrobbles.length !== newScrobblesCount) {
+    isFirstDroppedScrobbleEqualToLatestStoredScrobble = ScrobbledTrack.AreScrobblesEqual(
+      duplicates[0],
+      latestDownloadedScrobble
+    );
+  }
   const isOldestNewScrobbleDifferentFromDifferentFromLatestStoredScrobble = !ScrobbledTrack.AreScrobblesEqual(
     newScrobbles[newScrobbles.length - 1],
     latestDownloadedScrobble
   );
+
   if (
     isFirstDroppedScrobbleEqualToLatestStoredScrobble &&
     isOldestNewScrobbleDifferentFromDifferentFromLatestStoredScrobble
