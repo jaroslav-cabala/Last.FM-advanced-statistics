@@ -65,15 +65,13 @@ export class LocalStorageInfo {
   public readonly pagesDownloaded: number;
   public readonly scrobblesDownloaded: number;
   public readonly latestDownloadedScrobble: ScrobbledTrack;
+  public readonly readFriendlyString: string;
   constructor(scrobbles: ScrobbledTrack[], downloadedScrobbles: number) {
     this.pagesDownloaded = Math.ceil(scrobbles.length / 200);
     this.scrobblesDownloaded = downloadedScrobbles;
     // this.scrobblesDownloaded = scrobbles.length;
     this.latestDownloadedScrobble = scrobbles[0];
-  }
-
-  public ToString(): string {
-    return `Pages downloaded: ${this.pagesDownloaded},
+    this.readFriendlyString = `Pages downloaded: ${this.pagesDownloaded},
       Scrobbles downloaded: ${this.scrobblesDownloaded},
       Latest downloaded scrobble: ${getDateStringFromUts(this.latestDownloadedScrobble.date)}`;
   }

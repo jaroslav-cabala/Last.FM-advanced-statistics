@@ -44,3 +44,15 @@ function getOnePageOfRecentTracks$(pageNumber: number): Observable<RecentTracks>
     delay(delayBetweenRequestForRecentTracks)
   );
 }
+
+export function getScrobblesTest$(startPage: number, numberOfRequestToBeSent: number): Observable<Scrobbles> {
+  return range(startPage, numberOfRequestToBeSent).pipe(
+    concatMap((page) => getOnePageOfRecentTracks$(page)),
+    catchError((error) => {
+      dump([`Could not get all scrobbles!\nError: ${error.message}`]);
+      return EMPTY;
+    }),
+    map((recentTracks) => deserializeGetRecentTracksResponse(recentTracks)),
+    reduce((accumulatorArray, currentValue) => accumulatorArray.concat(currentValue))
+  );
+}

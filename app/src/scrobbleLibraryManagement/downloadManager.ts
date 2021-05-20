@@ -2,14 +2,15 @@ import { Subscription } from "rxjs";
 
 import { dump } from "../common";
 import { ScrobbledTrack, Scrobbles } from "../models/domain";
-import { getScrobbles$ } from "./downloaders/scrobbles";
+import { getScrobbles$, getScrobblesTest$ } from "./downloaders/scrobbles";
 import { getStorageStatusInfoJSON } from "./storageManager";
 
 export function downloadScrobbles(
+  startPage: number,
   pages: number,
   processScrobbles: (scrobbles: ScrobbledTrack[]) => void
 ): Subscription {
-  return getScrobbles$(pages).subscribe({
+  return getScrobblesTest$(startPage, pages).subscribe({
     next: processScrobbles,
     error: (err) => dump([`error in getScrobbles$ - ${err}`]),
     complete: () => dump([`getScrobbles$ completed!`]),
@@ -35,21 +36,22 @@ function getNumberOfPagesToDownload(): number {
   return 1;
 }
 
-function extractUnsavedScrobbles(scrobbles: Scrobbles, newScrobbles: number): Scrobbles {
-  let result: Scrobbles = [];
+function extractUnsavedScrobbles(scrobbles: Scrobbles, newScrobblesCount: number): Scrobbles {
+  let newScrobbles: Scrobbles = [];
 
   const storageStatusInfo = getStorageStatusInfoJSON();
   const latestDownloadedScrobble = storageStatusInfo.latestDownloadedScrobble;
   // const downloadedScrobbles = storageStatusInfo.scrobblesDownloaded;
 
-  result = scrobbles.slice(newScrobbles - 1);
+  newScrobbles = scrobbles.slice(0, newScrobblesCount);
+  const duplicates = scrobbles.slice(newScrobblesCount);
 
   const isFirstDroppedScrobbleEqualToLatestStoredScrobble = ScrobbledTrack.AreScrobblesEqual(
-    scrobbles[newScrobbles],
+    duplicates[0],
     latestDownloadedScrobble
   );
   const isOldestNewScrobbleDifferentFromDifferentFromLatestStoredScrobble = !ScrobbledTrack.AreScrobblesEqual(
-    scrobbles[scrobbles.length - 1],
+    newScrobbles[newScrobbles.length - 1],
     latestDownloadedScrobble
   );
   if (
@@ -57,7 +59,7 @@ function extractUnsavedScrobbles(scrobbles: Scrobbles, newScrobbles: number): Sc
     isOldestNewScrobbleDifferentFromDifferentFromLatestStoredScrobble
   ) {
     console.log("HOORAY, successfully extracted only new unsaved scrobbles!");
-    return result;
+    return newScrobbles;
   }
 
   console.log("OOOPS, something went wrong. Extraction of new unsaved scrobbles failed!");
@@ -65,7 +67,7 @@ function extractUnsavedScrobbles(scrobbles: Scrobbles, newScrobbles: number): Sc
     `Latest downloaded scrobble: `,
     latestDownloadedScrobble,
     `First dropped scrobble: `,
-    scrobbles[newScrobbles],
+    scrobbles[newScrobblesCount],
     `Oldest new scrobble: `,
     scrobbles[scrobbles.length - 1],
   ]);

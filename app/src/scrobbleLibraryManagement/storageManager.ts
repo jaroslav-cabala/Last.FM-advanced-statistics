@@ -15,11 +15,12 @@ export function getScrobblesJSON(): Scrobbles {
 
 export function saveStorageStatusInfo(scrobbles: Scrobbles, downloadedScrobbles: number): void {
   const storageStatusInfo = new LocalStorageInfo(scrobbles, downloadedScrobbles);
-  localStorage.setItem(StorageKeys.storageStatusInfo, storageStatusInfo.ToString());
+  localStorage.setItem(StorageKeys.storageStatusInfo, JSON.stringify(storageStatusInfo));
 }
 
-export function getStorageStatusInfoJSONString(): string | null {
-  return localStorage.getItem(StorageKeys.storageStatusInfo);
+export function updateStorageStatusInfo(scrobbles: Scrobbles, downloadedScrobbles: number): void {
+  const storageStatusInfo = new LocalStorageInfo(scrobbles, downloadedScrobbles);
+  localStorage.setItem(StorageKeys.storageStatusInfo, JSON.stringify(storageStatusInfo));
 }
 
 export function getStorageStatusInfoJSON(): LocalStorageInfo {

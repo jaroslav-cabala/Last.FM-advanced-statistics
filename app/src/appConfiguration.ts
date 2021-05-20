@@ -4,7 +4,7 @@ export enum StorageKeys {
 }
 
 export const username = "rikishiyayo";
-export const recentTracksPageSize = 15;
+export const recentTracksPageSize = 25;
 export const numberOfRecentTrackPagesToDownload = 5;
 export const delayBetweenRequestForRecentTracks = 500;
 
