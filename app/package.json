@@ -5,7 +5,8 @@
   "private": "true",
   "scripts": {
     "clean-dist": "npx rimraf ./compiledJs, ./dist",
-    "compile": "npx tsc",
+    "compile": "npx tsc --project tsconfig.prod.json",
+    "test": "jest --passWithNoTests --rootDir=src",
     "create-bundle": "npm run clean-dist && npm run compile && npx webpack",
     "start-server": ".\\node_modules\\.bin\\light-server --config light-server.config.json",
     "serve": "npm run create-bundle && npm run start-server"

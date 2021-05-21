@@ -1,7 +1,8 @@
 {
     "serve": ".",
     "watchexps": [
-        "**, !node_modules/**, !dist/**, !compiledJs/** # npm run serve # reload"
+        "**, !**/*.test.ts, !node_modules/** # npm run serve # reload",
+        "!dist/**, !compiledJs/**, !package.json, !package-lock.json # npm run serve # reload"
     ],
     "interval": 1000
 }
