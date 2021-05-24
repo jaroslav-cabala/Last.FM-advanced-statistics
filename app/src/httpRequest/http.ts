@@ -9,7 +9,7 @@ export function get(uri: string, additionalParams: Record<string, string>[] = []
 
 /*
  * Looks at a fetch response. If the response is not OK(status code 200, 2**), throws an error.
- * If it is OK, returns a Promise that resolves to the response content in json
+ * If it's OK, returns a Promise that resolves to the response content in json.
  */
 export const inspectFetchResponse = async (response: Response): Promise<any> => {
   if (response.ok) {

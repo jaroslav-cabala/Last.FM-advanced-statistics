@@ -1,4 +1,6 @@
 {
   "extends": "./tsconfig.json",
-  "exclude": ["**/test", "**/*.test.*"]
+  "include": ["src/**/*"],
+  "exclude": ["**/test", "**/*.test.*"],
+  "outDir": "compiledJs"
 }
