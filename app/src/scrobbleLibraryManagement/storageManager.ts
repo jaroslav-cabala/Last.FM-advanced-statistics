@@ -1,52 +1,60 @@
 import { StorageKeys } from "../appConfiguration";
 import { LocalStorageInfo, Scrobbles } from "../models/domain";
 
-export function saveScrobbles(scrobbles: Scrobbles): void {
+export const saveScrobbles = function(scrobbles: Scrobbles): void {
+  console.log("ORIGINAL saveScrobbles()");
   localStorage.setItem(StorageKeys.scrobbles, JSON.stringify(scrobbles));
-}
+};
 
-export function getScrobblesJSONString(): string | null {
+export const getScrobblesJSONString = function(): string | null {
   return localStorage.getItem(StorageKeys.scrobbles);
-}
+};
 
-export function getScrobblesJSON(): Scrobbles {
-  return JSON.parse(<string>localStorage.getItem(StorageKeys.scrobbles));
-}
+export const getScrobbles = function(): Scrobbles {
+  console.log("ORIGINAL getScrobbles()");
+  const scrobblesJSON = getScrobblesJSONString();
 
-export function saveStorageStatusInfo(scrobbles: Scrobbles, downloadedScrobbles: number): void {
+  if (scrobblesJSON) {
+    return JSON.parse(scrobblesJSON);
+  }
+  return [];
+};
+
+export const saveStorageStatusInfo = function(scrobbles: Scrobbles, downloadedScrobbles: number): void {
   const storageStatusInfo = new LocalStorageInfo(scrobbles, downloadedScrobbles);
   localStorage.setItem(StorageKeys.storageStatusInfo, JSON.stringify(storageStatusInfo));
-}
+};
 
-export function updateStorageStatusInfo(scrobbles: Scrobbles, downloadedScrobbles: number): void {
+export const updateStorageStatusInfo = function(scrobbles: Scrobbles, downloadedScrobbles: number): void {
   const storageStatusInfo = new LocalStorageInfo(scrobbles, downloadedScrobbles);
   localStorage.setItem(StorageKeys.storageStatusInfo, JSON.stringify(storageStatusInfo));
-}
+};
 
-export function getStorageStatusInfoJSON(): LocalStorageInfo {
+export const getStorageStatusInfoJSON = function(): LocalStorageInfo {
   return JSON.parse(<string>localStorage.getItem(StorageKeys.storageStatusInfo));
-}
+};
 
-export function removeItem(itemKey: string): void {
+export const removeItem = function(itemKey: string): void {
   localStorage.removeItem(itemKey);
-}
+};
 
-export function clearStorage(): void {
+export const clearStorage = function(): void {
   localStorage.clear();
-}
+};
 
-export function addScrobbles(scrobbles: Scrobbles): void {
-  const existingScrobblesString = getScrobblesJSONString();
+export const addScrobbles = function(scrobbles: Scrobbles): void {
+  const existingScrobbles = getScrobbles();
 
-  if (existingScrobblesString) {
-    const existingScrobbles: Scrobbles = JSON.parse(existingScrobblesString);
+  if (existingScrobbles) {
     existingScrobbles.unshift(...scrobbles);
+    console.log("existingScrobbles is truthy, invoking saveScrobbles()");
     saveScrobbles(existingScrobbles);
   } else {
+    console.log("existingScrobbles is falsy, invoking saveScrobbles()");
     saveScrobbles(scrobbles);
   }
-}
+};
 
-export function isStorageEmpty(): boolean {
+export const isStorageEmpty = function(): boolean {
   return !getScrobblesJSONString();
-}
+};

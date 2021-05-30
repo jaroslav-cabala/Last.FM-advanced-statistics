@@ -8,16 +8,15 @@ import { getUserInfo } from "./scrobbleLibraryManagement/downloaders/userInfo";
 
 let user: User;
 StorageManager.clearStorage();
-userInfo();
 
-async function userInfo() {
+const userInfo = async function() {
   try {
     user = await getUserInfo(username);
     updateLocalStorageStatus();
   } catch (error) {
     dump(["Downloading user info from last.fm failed! Error: ", error]);
   }
-}
+};
 
 // dump downloaded scrobbles and storage info
 const button = document.querySelector("#btnDumpDownloadedScrobbles");
@@ -40,7 +39,7 @@ button2?.addEventListener("click", () => {
   startDownloadingScrobbles();
 });
 
-async function startDownloadingScrobbles(): Promise<void> {
+const startDownloadingScrobbles = async function(): Promise<void> {
   await userInfo();
   if (StorageManager.isStorageEmpty()) {
     DownloadManager.downloadScrobbles(4, numberOfRecentTrackPagesToDownload, processScrobbles);
@@ -63,9 +62,9 @@ async function startDownloadingScrobbles(): Promise<void> {
       dump(["All scrobbles from Last.fm are downloaded!"]);
     }
   }
-}
+};
 
-function processScrobbles(scrobbles: Scrobbles) {
+const processScrobbles = function(scrobbles: Scrobbles) {
   dump(["Downloaded scrobbles: ", scrobbles.length]);
   StorageManager.saveScrobbles(scrobbles);
   StorageManager.saveStorageStatusInfo(scrobbles, user.totalScrobbles - 3 * recentTracksPageSize);
@@ -78,9 +77,9 @@ function processScrobbles(scrobbles: Scrobbles) {
   );
   const textArea = <Element>document.querySelector("#textArea");
   textArea.textContent = JSON.stringify(downloadedScrobbles);
-}
+};
 
-function processNewScrobbles(scrobbles: Scrobbles) {
+const processNewScrobbles = function(scrobbles: Scrobbles) {
   dump(["Downloaded new scrobbles: ", scrobbles.length]);
   StorageManager.addScrobbles(scrobbles);
 
@@ -95,7 +94,7 @@ function processNewScrobbles(scrobbles: Scrobbles) {
   );
   const textArea = <Element>document.querySelector("#textArea");
   textArea.textContent = JSON.stringify(downloadedScrobbles);
-}
+};
 
 // Local storage status
 const button3 = document.querySelector("#btnUpdateStatus");
@@ -109,7 +108,7 @@ button4?.addEventListener("click", function () {
   StorageManager.addScrobbles(testScrobbles);
 });
 
-function updateLocalStorageStatus() {
+const updateLocalStorageStatus = function() {
   const downloadedScrobbles = StorageManager.getStorageStatusInfoJSON()?.scrobblesDownloaded;
   const span = <Element>document.querySelector("#spanStatus");
 
@@ -122,4 +121,6 @@ function updateLocalStorageStatus() {
   } else {
     span.textContent = "Local storage contains all scrobbles from Last.fm!";
   }
-}
+};
+
+userInfo();

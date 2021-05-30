@@ -8,7 +8,7 @@ import { delayBetweenRequestForRecentTracks, getRecentTracksResourceUri } from "
 import { GetRecentTracksResponse, RecentTracks } from "../../models/lastFMApiResponses";
 import { Scrobbles } from "../../models/domain";
 
-export function getScrobbles$(numberOfRequestToBeSent: number): Observable<Scrobbles> {
+export const getScrobbles$ = function(numberOfRequestToBeSent: number): Observable<Scrobbles> {
   return range(1, numberOfRequestToBeSent).pipe(
     concatMap((page) => getOnePageOfRecentTracks$(page)),
     catchError((error) => {
@@ -18,9 +18,9 @@ export function getScrobbles$(numberOfRequestToBeSent: number): Observable<Scrob
     map((recentTracks) => deserializeGetRecentTracksResponse(recentTracks)),
     reduce((accumulatorArray, currentValue) => accumulatorArray.concat(currentValue))
   );
-}
+};
 
-function getOnePageOfRecentTracks$(pageNumber: number): Observable<RecentTracks> {
+const getOnePageOfRecentTracks$ = function(pageNumber: number): Observable<RecentTracks> {
   dump([`Getting ${pageNumber}. page of scrobbles`]);
 
   // const random = Math.floor(Math.random() * 4);
@@ -39,9 +39,9 @@ function getOnePageOfRecentTracks$(pageNumber: number): Observable<RecentTracks>
     retryWhen(retryStrategy()),
     delay(delayBetweenRequestForRecentTracks)
   );
-}
+};
 
-export function getScrobblesTest$(startPage: number, numberOfRequestToBeSent: number): Observable<Scrobbles> {
+export const getScrobblesTest$ = function(startPage: number, numberOfRequestToBeSent: number): Observable<Scrobbles> {
   return range(startPage, numberOfRequestToBeSent).pipe(
     concatMap((page) => getOnePageOfRecentTracks$(page)),
     catchError((error) => {
@@ -51,4 +51,4 @@ export function getScrobblesTest$(startPage: number, numberOfRequestToBeSent: nu
     map((recentTracks) => deserializeGetRecentTracksResponse(recentTracks)),
     reduce((accumulatorArray, currentValue) => accumulatorArray.concat(currentValue))
   );
-}
+};

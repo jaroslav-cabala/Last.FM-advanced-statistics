@@ -1,11 +1,11 @@
 import { dump } from "../common";
 
-export function get(uri: string, additionalParams: Record<string, string>[] = []): Promise<Response> {
+export const get = function(uri: string, additionalParams: Record<string, string>[] = []): Promise<Response> {
   for (const param of additionalParams) {
     uri += `&${param.name}=${param.value}`;
   }
   return fetch(uri);
-}
+};
 
 /*
  * Looks at a fetch response. If the response is not OK(status code 200, 2**), throws an error.
