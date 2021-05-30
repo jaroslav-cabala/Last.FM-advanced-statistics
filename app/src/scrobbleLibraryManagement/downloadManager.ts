@@ -32,9 +32,9 @@ export function downloadNewScrobbles(
   });
 }
 
-function getNumberOfPagesToDownload(): number {
-  return 1;
-}
+// function getNumberOfPagesToDownload(): number {
+//   return 1;
+// }
 
 function extractUnsavedScrobbles(scrobbles: Scrobbles, newScrobblesCount: number): Scrobbles {
   let newScrobbles: Scrobbles = [];

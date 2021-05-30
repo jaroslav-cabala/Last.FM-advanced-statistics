@@ -11,7 +11,7 @@ export class ScrobbledTrack {
     public readonly date: string
   ) {}
 
-  static AreScrobblesEqual(scrobble1: ScrobbledTrack, scrobble2: ScrobbledTrack) {
+  static AreScrobblesEqual(scrobble1: ScrobbledTrack, scrobble2: ScrobbledTrack): boolean {
     return (
       scrobble1.date === scrobble2.date &&
       scrobble1.name === scrobble2.name &&
@@ -37,7 +37,7 @@ export class Album {
     public readonly url: string = ""
   ) {}
 
-  static AreAlbumsEqual(album1: Album, album2: Album) {
+  static AreAlbumsEqual(album1: Album, album2: Album): boolean {
     return album1.mbid === album2.mbid && album1.name === album2.name;
   }
 }
@@ -56,7 +56,7 @@ export class Artist {
     public readonly url: string = ""
   ) {}
 
-  static AreArtistsEqual(artist1: Artist, artist2: Artist) {
+  static AreArtistsEqual(artist1: Artist, artist2: Artist): boolean {
     return artist1.mbid === artist2.mbid && artist1.name === artist2.name;
   }
 }

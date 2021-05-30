@@ -20,7 +20,7 @@ async function userInfo() {
 }
 
 // dump downloaded scrobbles and storage info
-var button = document.querySelector("#btnDumpDownloadedScrobbles");
+const button = document.querySelector("#btnDumpDownloadedScrobbles");
 button?.addEventListener("click", function () {
   const scrobbles = JSON.parse(
     StorageManager.getScrobblesJSONString() || "{ \"Error\": \"property 'scrobbles' not found in localStorage\" }"
@@ -35,8 +35,8 @@ button?.addEventListener("click", function () {
 });
 
 // download scrobbles
-var button = document.querySelector("#btnDownloadScrobbles");
-button?.addEventListener("click", () => {
+const button2 = document.querySelector("#btnDownloadScrobbles");
+button2?.addEventListener("click", () => {
   startDownloadingScrobbles();
 });
 
@@ -98,14 +98,14 @@ function processNewScrobbles(scrobbles: Scrobbles) {
 }
 
 // Local storage status
-var button = document.querySelector("#btnUpdateStatus");
-button?.addEventListener("click", async function () {
+const button3 = document.querySelector("#btnUpdateStatus");
+button3?.addEventListener("click", async function () {
   await userInfo();
   updateLocalStorageStatus();
 });
 
-var button = document.querySelector("#testUpdating");
-button?.addEventListener("click", function () {
+const button4 = document.querySelector("#testUpdating");
+button4?.addEventListener("click", function () {
   StorageManager.addScrobbles(testScrobbles);
 });
 

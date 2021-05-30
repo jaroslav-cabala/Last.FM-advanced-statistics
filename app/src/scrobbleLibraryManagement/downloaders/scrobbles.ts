@@ -4,11 +4,7 @@ import { catchError, concatMap, map, reduce, delay, retryWhen, tap } from "rxjs/
 import { get, inspectFetchResponse } from "../../httpRequest/http";
 import { deserializeGetRecentTracksResponse } from "../deserializer";
 import { dump, retryStrategy } from "../../common";
-import {
-  delayBetweenRequestForRecentTracks,
-  getRecentTracksResourceUri,
-  resourceUris,
-} from "../../appConfiguration";
+import { delayBetweenRequestForRecentTracks, getRecentTracksResourceUri } from "../../appConfiguration";
 import { GetRecentTracksResponse, RecentTracks } from "../../models/lastFMApiResponses";
 import { Scrobbles } from "../../models/domain";
 
