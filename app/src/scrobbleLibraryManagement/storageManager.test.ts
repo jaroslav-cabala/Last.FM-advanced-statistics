@@ -6,10 +6,11 @@ describe("StorageManager", () => {
     let testMethodSpy: jest.SpyInstance;
 
     beforeEach(() => {
+      jest.clearAllMocks();
       testMethodSpy = jest.spyOn(storageManager, "saveScrobbles");
     });
 
-    test.only("if list of scrobbles is not empty, adds 10 new scrobbles to the end of the list", () => {
+    test("if list of scrobbles is not empty, adds 10 new scrobbles to the end of the list", () => {
       jest.spyOn(storageManager, "getScrobbles").mockImplementation(() => {
         console.log("MOCKED getScrobbles()");
         return testScrobbles;
