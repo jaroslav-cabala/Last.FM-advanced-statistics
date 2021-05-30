@@ -1,7 +1,7 @@
 import { Observable, timer } from "rxjs";
 import { mergeMap } from "rxjs/operators";
 
-export const getDateStringFromUts = (uts: string, locale: string = "en-GB"): string => {
+export const getDateStringFromUts = (uts: string, locale = "en-GB"): string => {
   const date = new Date(parseInt(uts + "000"));
   return date.toLocaleString(locale);
 };
@@ -13,26 +13,28 @@ export const getCurrentTimeString = (): string => {
 
 export const dump = (messages: unknown[]): void => console.log(`${getCurrentTimeString()}: `, ...messages);
 
-export const retryStrategy = (
-  retryStrategyArguments = {
-    maxTryAttemps: 3,
-    retryDelay: (retryAttempt: number) => Math.pow(2, retryAttempt) * 1000,
-  }
-) => (attempts: any): Observable<number> => {
-  return attempts.pipe(
-    mergeMap((error, index) => {
-      const retryCount = index + 1;
+export const retryStrategy =
+  (
+    retryStrategyArguments = {
+      maxTryAttemps: 3,
+      retryDelay: (retryAttempt: number) => Math.pow(2, retryAttempt) * 1000,
+    }
+  ) =>
+  (attempts: any): Observable<number> => {
+    return attempts.pipe(
+      mergeMap((error, index) => {
+        const retryCount = index + 1;
 
-      if (retryCount > retryStrategyArguments.maxTryAttemps)
-        throw Error(`Request failed after ${retryStrategyArguments.maxTryAttemps} retry attempts.\n
+        if (retryCount > retryStrategyArguments.maxTryAttemps)
+          throw Error(`Request failed after ${retryStrategyArguments.maxTryAttemps} retry attempts.\n
           Original error: ${error}`);
 
-      const retryDelay = retryStrategyArguments.retryDelay(retryCount);
-      dump([`Retrying ${retryCount}. time in ${retryDelay}ms`]);
-      return timer(retryDelay);
-    })
-  );
-};
+        const retryDelay = retryStrategyArguments.retryDelay(retryCount);
+        dump([`Retrying ${retryCount}. time in ${retryDelay}ms`]);
+        return timer(retryDelay);
+      })
+    );
+  };
 
 /*
  * Finds page number in provided string using regular expression.
