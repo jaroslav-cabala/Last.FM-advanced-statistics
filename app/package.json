@@ -4,9 +4,11 @@
   "description": "An application that provides more detailed last.fm scrobbling statistics",
   "private": "true",
   "scripts": {
+    "lint": "npx eslint src/",
+    "lint-fix": "npx eslint src/ --fix",
     "clean-dist": "npx rimraf ./compiledJs, ./dist",
-    "compile": "npx tsc --project tsconfig.prod.json",
-    "compile-tests": "npx rimraf ./compiledJsForTests && npx tsc --project tsconfig.tests.json",
+    "compile": "npm run lint && npx tsc --project tsconfig.prod.json",
+    "compile-tests": "npm run lint && npx rimraf ./compiledJsForTests && npx tsc --project tsconfig.tests.json",
     "test": "npm run compile-tests && jest --passWithNoTests --rootDir=compiledJsForTests",
     "create-bundle": "npm run clean-dist && npm run compile && npx webpack",
     "start-server": ".\\node_modules\\.bin\\light-server --config light-server.config.json",
