@@ -44,15 +44,8 @@ export const clearStorage = function(): void {
 
 export const addScrobbles = function(scrobbles: Scrobbles): void {
   const existingScrobbles = getScrobbles();
-
-  if (existingScrobbles) {
-    existingScrobbles.unshift(...scrobbles);
-    console.log("existingScrobbles is truthy, invoking saveScrobbles()");
-    saveScrobbles(existingScrobbles);
-  } else {
-    console.log("existingScrobbles is falsy, invoking saveScrobbles()");
-    saveScrobbles(scrobbles);
-  }
+  existingScrobbles.unshift(...scrobbles);
+  saveScrobbles(existingScrobbles);
 };
 
 export const isStorageEmpty = function(): boolean {

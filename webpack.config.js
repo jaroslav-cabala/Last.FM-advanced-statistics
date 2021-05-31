@@ -1,4 +1,4 @@
 module.exports = {
   mode: "development",
-  entry: "./compiledJs/src/index.js",
+  entry: "./compiledJs/app/src/index.js",
 };
