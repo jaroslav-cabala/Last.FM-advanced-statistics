@@ -2,7 +2,6 @@ import { StorageKeys } from "../appConfiguration";
 import { LocalStorageInfo, Scrobbles } from "../models/domain";
 
 export const saveScrobbles = function(scrobbles: Scrobbles): void {
-  console.log("ORIGINAL saveScrobbles()");
   localStorage.setItem(StorageKeys.scrobbles, JSON.stringify(scrobbles));
 };
 
@@ -11,7 +10,6 @@ export const getScrobblesJSONString = function(): string | null {
 };
 
 export const getScrobbles = function(): Scrobbles {
-  console.log("ORIGINAL getScrobbles()");
   const scrobblesJSON = getScrobblesJSONString();
 
   if (scrobblesJSON) {

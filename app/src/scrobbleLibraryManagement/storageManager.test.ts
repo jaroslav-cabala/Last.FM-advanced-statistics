@@ -3,31 +3,32 @@ import { testScrobbles, testScrobbles2 } from "../files/testScrobbles";
 import * as storageManager from "./storageManager";
 
 describe("StorageManager", () => {
+  beforeEach(() => {
+    jest.restoreAllMocks();
+    localStorage.clear();
+  });
+
   describe("addScrobbles()", () => {
     let testMethodSpy: jest.SpyInstance;
 
     beforeEach(() => {
-      localStorage.clear();
-      jest.clearAllMocks();
       testMethodSpy = jest.spyOn(storageManager, "saveScrobbles").mockName("saveScrobblesSpy");
     });
 
     test("if list of scrobbles is not empty, inserts 10 new scrobbles at the start of the list", () => {
       jest.spyOn(storageManager, "getScrobbles").mockImplementation(() => {
-        console.log("MOCKED getScrobbles()");
-        return testScrobbles;
+        return testScrobbles.slice();
       });
-
-      storageManager.addScrobbles(testScrobbles2);
       const expected = testScrobbles2.concat(testScrobbles);
 
+      storageManager.addScrobbles(testScrobbles2);
+
       expect(testMethodSpy).toHaveBeenCalledTimes(1);
-      expect(testMethodSpy).toHaveBeenCalledWith(testScrobbles2.concat(testScrobbles));
+      expect(testMethodSpy).toHaveBeenCalledWith(expected);
     });
 
     test("if list of scrobbles is empty, adds 10 new scrobbles to the list", () => {
       jest.spyOn(storageManager, "getScrobbles").mockImplementation(() => {
-        console.log("MOCKED getScrobbles()");
         return [];
       });
 
@@ -44,7 +45,7 @@ describe("StorageManager", () => {
     });
 
     test("returns false if the storage contains at least 1 scrobble", () => {
-      localStorage.setItem(StorageKeys.scrobbles, "");
+      localStorage.setItem(StorageKeys.scrobbles, "{}");
       expect(storageManager.isStorageEmpty()).toBe(false);
     });
   });
