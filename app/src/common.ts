@@ -22,7 +22,7 @@ export const retryStrategy =
   ) =>
     (attempts: any): Observable<number> => {
       return attempts.pipe(
-        mergeMap((error, index) => {
+        mergeMap((error, index: number) => {
           const retryCount = index + 1;
 
           if (retryCount > retryStrategyArguments.maxTryAttemps)
