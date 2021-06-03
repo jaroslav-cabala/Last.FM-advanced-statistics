@@ -32,10 +32,6 @@ export const downloadNewScrobbles = function(
   });
 };
 
-// function getNumberOfPagesToDownload(): number {
-//   return 1;
-// }
-
 const extractUnsavedScrobbles = function(scrobbles: Scrobbles, newScrobblesCount: number): Scrobbles {
   let newScrobbles: Scrobbles = [];
 

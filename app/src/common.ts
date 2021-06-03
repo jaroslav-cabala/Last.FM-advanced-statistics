@@ -51,4 +51,5 @@ export const findPageNumber = (paragraph: string): string | null => {
   return null;
 };
 
-const regexFindMatchInString = (regexExpression: RegExp, paragraph: string) => paragraph.match(regexExpression);
+const regexFindMatchInString =
+  (regexExpression: RegExp, paragraph: string) => paragraph.match(regexExpression);

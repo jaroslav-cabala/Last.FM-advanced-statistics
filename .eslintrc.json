@@ -16,6 +16,8 @@
     "linebreak-style": ["error", "windows"],
     "quotes": ["error", "double"],
     "semi": ["error", "always"],
-    "func-style": ["error", "expression"]
+    "func-style": ["error", "expression"],
+    "dot-location": ["error", "property"],
+    "max-len": ["error", { "code": 110, "ignoreStrings": true, "ignoreTemplateLiterals": true }]
   }
 }

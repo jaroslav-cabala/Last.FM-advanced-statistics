@@ -11,6 +11,7 @@
     "compile": "npm run lint && npx tsc --project tsconfig.prod.json",
     "compile-tests": "npm run lint-tests && npx rimraf ./compiledJsForTests && npx tsc --project tsconfig.tests.json",
     "test": "npm run compile-tests && jest --passWithNoTests --rootDir=compiledJsForTests",
+    "test-watch_all": "npm run compile-tests && jest --passWithNoTests --rootDir=compiledJsForTests --watchAll",
     "create-bundle": "npm run clean-dist && npm run compile && npx webpack",
     "start-server": ".\\node_modules\\.bin\\light-server --config light-server.config.json",
     "serve": "npm run create-bundle && npm run start-server"

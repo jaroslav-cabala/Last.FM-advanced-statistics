@@ -4,7 +4,6 @@ import * as storageManager from "./storageManager";
 
 describe("StorageManager", () => {
   beforeEach(() => {
-    jest.restoreAllMocks();
     localStorage.clear();
   });
 
