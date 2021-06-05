@@ -10,12 +10,12 @@ import { Scrobbles } from "../../models/domain";
 
 export const getScrobbles$ = function(numberOfRequestToBeSent: number): Observable<Scrobbles> {
   return range(1, numberOfRequestToBeSent).pipe(
-    concatMap((page) => getOnePageOfRecentTracks$(page)),
+    concatMap<number, Observable<RecentTracks>>((page) => getOnePageOfRecentTracks$(page)),
     catchError((error) => {
       dump([`Could not get all scrobbles!\nError: ${error.message}`]);
       return EMPTY;
     }),
-    map((recentTracks) => deserializeGetRecentTracksResponse(recentTracks)),
+    map<RecentTracks, Scrobbles>((recentTracks) => deserializeGetRecentTracksResponse(recentTracks)),
     reduce((accumulatorArray, currentValue) => accumulatorArray.concat(currentValue))
   );
 };

@@ -22,7 +22,8 @@ const userInfo = async function() {
 const button = document.querySelector("#btnDumpDownloadedScrobbles");
 button?.addEventListener("click", function () {
   const scrobbles = JSON.parse(
-    StorageManager.getScrobblesJSONString() || "{ \"Error\": \"property 'scrobbles' not found in localStorage\" }"
+    StorageManager.getScrobblesJSONString()
+      || "{ \"Error\": \"property 'scrobbles' not found in localStorage\" }"
   );
   const storageStatusInfo =
     StorageManager.getStorageStatusInfoJSON().readFriendlyString ||
@@ -73,7 +74,8 @@ const processScrobbles = function(scrobbles: Scrobbles) {
   localStorageContent.textContent = StorageManager.getStorageStatusInfoJSON().readFriendlyString;
 
   const downloadedScrobbles = JSON.parse(
-    StorageManager.getScrobblesJSONString() || "{ \"Error\": \"property 'scrobbles' not found in localStorage\" }"
+    StorageManager.getScrobblesJSONString()
+      || "{ \"Error\": \"property 'scrobbles' not found in localStorage\" }"
   );
   const textArea = <Element>document.querySelector("#textArea");
   textArea.textContent = JSON.stringify(downloadedScrobbles);
@@ -90,7 +92,8 @@ const processNewScrobbles = function(scrobbles: Scrobbles) {
   localStorageContent.textContent = StorageManager.getStorageStatusInfoJSON().readFriendlyString;
 
   const downloadedScrobbles = JSON.parse(
-    StorageManager.getScrobblesJSONString() || "{ \"Error\": \"property 'scrobbles' not found in localStorage\" }"
+    StorageManager.getScrobblesJSONString()
+      || "{ \"Error\": \"property 'scrobbles' not found in localStorage\" }"
   );
   const textArea = <Element>document.querySelector("#textArea");
   textArea.textContent = JSON.stringify(downloadedScrobbles);
