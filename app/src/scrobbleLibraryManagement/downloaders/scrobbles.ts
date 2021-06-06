@@ -8,7 +8,7 @@ import { delayBetweenRequestForRecentTracks, getRecentTracksResourceUri } from "
 import { GetRecentTracksResponse, RecentTracks } from "../../models/lastFMApiResponses";
 import { Scrobbles } from "../../models/domain";
 
-export const getScrobbles$ = function(numberOfRequestToBeSent: number): Observable<Scrobbles> {
+export const getScrobbles$ = function (numberOfRequestToBeSent: number): Observable<Scrobbles> {
   return range(1, numberOfRequestToBeSent).pipe(
     concatMap<number, Observable<RecentTracks>>((page) => getOnePageOfRecentTracks$(page)),
     catchError((error) => {
@@ -20,7 +20,7 @@ export const getScrobbles$ = function(numberOfRequestToBeSent: number): Observab
   );
 };
 
-const getOnePageOfRecentTracks$ = function(pageNumber: number): Observable<RecentTracks> {
+const getOnePageOfRecentTracks$ = function (pageNumber: number): Observable<RecentTracks> {
   dump([`Getting ${pageNumber}. page of scrobbles`]);
 
   return defer(() =>
@@ -39,15 +39,17 @@ const getOnePageOfRecentTracks$ = function(pageNumber: number): Observable<Recen
   );
 };
 
-export const getScrobblesTest$ =
-  function(startPage: number, numberOfRequestToBeSent: number): Observable<Scrobbles> {
-    return range(startPage, numberOfRequestToBeSent).pipe(
-      concatMap((page) => getOnePageOfRecentTracks$(page)),
-      catchError((error) => {
-        dump([`Could not get all scrobbles!\nError: ${error.message}`]);
-        return EMPTY;
-      }),
-      map((recentTracks) => deserializeGetRecentTracksResponse(recentTracks)),
-      reduce((accumulatorArray, currentValue) => accumulatorArray.concat(currentValue))
-    );
-  };
+export const getScrobblesTest$ = function (
+  startPage: number,
+  numberOfRequestToBeSent: number
+): Observable<Scrobbles> {
+  return range(startPage, numberOfRequestToBeSent).pipe(
+    concatMap((page) => getOnePageOfRecentTracks$(page)),
+    catchError((error) => {
+      dump([`Could not get all scrobbles!\nError: ${error.message}`]);
+      return EMPTY;
+    }),
+    map((recentTracks) => deserializeGetRecentTracksResponse(recentTracks)),
+    reduce((accumulatorArray, currentValue) => accumulatorArray.concat(currentValue))
+  );
+};

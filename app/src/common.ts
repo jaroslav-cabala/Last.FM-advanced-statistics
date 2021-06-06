@@ -1,7 +1,7 @@
 import { Observable, timer } from "rxjs";
 import { mergeMap } from "rxjs/operators";
 
-export class RecentTracksDownloadFailedException extends Error{
+export class RecentTracksDownloadFailedException extends Error {
   public readonly name = "RecentTracksDownloadFailedException";
 
   constructor(message: string) {
@@ -28,23 +28,23 @@ export const retryStrategy =
       retryDelay: (retryAttempt: number) => Math.pow(1, retryAttempt) * 500,
     }
   ) =>
-    (attempts: any): Observable<number> => {
-      const errors: string[] = [];
-      return attempts.pipe(
-        mergeMap((error: Error, index: number) => {
-          errors.push(error.message);
-          const retryCount = index + 1;
+  (attempts: any): Observable<number> => {
+    const errors: string[] = [];
+    return attempts.pipe(
+      mergeMap((error: Error, index: number) => {
+        errors.push(error.message);
+        const retryCount = index + 1;
 
-          if (retryCount > retryStrategyArguments.maxTryAttemps)
-            throw Error(`Request failed after ${retryStrategyArguments.maxTryAttemps} retry attempts.\n
-              Original error messages: ${errors.map(err => `[[${err}]]`)}`);
+        if (retryCount > retryStrategyArguments.maxTryAttemps)
+          throw Error(`Request failed after ${retryStrategyArguments.maxTryAttemps} retry attempts.\n
+              Original error messages: ${errors.map((err) => `[[${err}]]`)}`);
 
-          const retryDelay = retryStrategyArguments.retryDelay(retryCount);
-          dump([`Retrying ${retryCount}. time in ${retryDelay}ms`]);
-          return timer(retryDelay);
-        })
-      );
-    };
+        const retryDelay = retryStrategyArguments.retryDelay(retryCount);
+        dump([`Retrying ${retryCount}. time in ${retryDelay}ms`]);
+        return timer(retryDelay);
+      })
+    );
+  };
 
 /*
  * Finds page number in provided string using regular expression.
@@ -61,5 +61,5 @@ export const findPageNumber = (paragraph: string): string | null => {
   return null;
 };
 
-const regexFindMatchInString =
-  (regexExpression: RegExp, paragraph: string) => paragraph.match(regexExpression);
+const regexFindMatchInString = (regexExpression: RegExp, paragraph: string) =>
+  paragraph.match(regexExpression);

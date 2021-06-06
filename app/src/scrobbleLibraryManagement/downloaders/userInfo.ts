@@ -7,7 +7,7 @@ import { get, inspectFetchResponse } from "../../httpRequest/http";
 import { User } from "../../models/domain";
 import { GetUserInfoResponse } from "../../models/lastFMApiResponses";
 
-export const getUserInfo = function(username: string): Promise<User> {
+export const getUserInfo = function (username: string): Promise<User> {
   return defer(() => from(get(getUserInfoResourceUri, [{ name: "user", value: username }])))
     .pipe(
       concatMap(inspectFetchResponse),

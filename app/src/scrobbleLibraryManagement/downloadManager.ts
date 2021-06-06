@@ -5,7 +5,7 @@ import { ScrobbledTrack, Scrobbles } from "../models/domain";
 import { getScrobbles$, getScrobblesTest$ } from "./downloaders/scrobbles";
 import { getStorageStatusInfoJSON } from "./storageManager";
 
-export const downloadScrobbles = function(
+export const downloadScrobbles = function (
   startPage: number,
   pages: number,
   processScrobbles: (scrobbles: ScrobbledTrack[]) => void
@@ -17,7 +17,7 @@ export const downloadScrobbles = function(
   });
 };
 
-export const downloadNewScrobbles = function(
+export const downloadNewScrobbles = function (
   pages: number,
   newScrobblesCount: number,
   processScrobbles: (scrobbles: Scrobbles) => void
@@ -32,7 +32,7 @@ export const downloadNewScrobbles = function(
   });
 };
 
-const extractUnsavedScrobbles = function(scrobbles: Scrobbles, newScrobblesCount: number): Scrobbles {
+const extractUnsavedScrobbles = function (scrobbles: Scrobbles, newScrobblesCount: number): Scrobbles {
   let newScrobbles: Scrobbles = [];
 
   const storageStatusInfo = getStorageStatusInfoJSON();

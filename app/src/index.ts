@@ -11,7 +11,7 @@ import { GetRecentTracksResponse, RecentTracks } from "./models/lastFMApiRespons
 let user: User;
 StorageManager.clearStorage();
 
-const userInfo = async function() {
+const userInfo = async function () {
   try {
     user = await getUserInfo(username);
     updateLocalStorageStatus();
@@ -24,8 +24,8 @@ const userInfo = async function() {
 const button = document.querySelector("#btnDumpDownloadedScrobbles");
 button?.addEventListener("click", function () {
   const scrobbles = JSON.parse(
-    StorageManager.getScrobblesJSONString()
-      || "{ \"Error\": \"property 'scrobbles' not found in localStorage\" }"
+    StorageManager.getScrobblesJSONString() ||
+      '{ "Error": "property \'scrobbles\' not found in localStorage" }'
   );
   const storageStatusInfo =
     StorageManager.getStorageStatusInfoJSON().readFriendlyString ||
@@ -42,7 +42,7 @@ button2?.addEventListener("click", () => {
   startDownloadingScrobbles();
 });
 
-const startDownloadingScrobbles = async function(): Promise<void> {
+const startDownloadingScrobbles = async function (): Promise<void> {
   await userInfo();
   if (StorageManager.isStorageEmpty()) {
     DownloadManager.downloadScrobbles(4, numberOfRecentTrackPagesToDownload, processScrobbles);
@@ -67,7 +67,7 @@ const startDownloadingScrobbles = async function(): Promise<void> {
   }
 };
 
-const processScrobbles = function(scrobbles: Scrobbles) {
+const processScrobbles = function (scrobbles: Scrobbles) {
   dump(["Downloaded scrobbles: ", scrobbles.length]);
   StorageManager.saveScrobbles(scrobbles);
   StorageManager.saveStorageStatusInfo(scrobbles, user.totalScrobbles - 3 * recentTracksPageSize);
@@ -76,14 +76,14 @@ const processScrobbles = function(scrobbles: Scrobbles) {
   localStorageContent.textContent = StorageManager.getStorageStatusInfoJSON().readFriendlyString;
 
   const downloadedScrobbles = JSON.parse(
-    StorageManager.getScrobblesJSONString()
-      || "{ \"Error\": \"property 'scrobbles' not found in localStorage\" }"
+    StorageManager.getScrobblesJSONString() ||
+      '{ "Error": "property \'scrobbles\' not found in localStorage" }'
   );
   const textArea = <Element>document.querySelector("#textArea");
   textArea.textContent = JSON.stringify(downloadedScrobbles);
 };
 
-const processNewScrobbles = function(scrobbles: Scrobbles) {
+const processNewScrobbles = function (scrobbles: Scrobbles) {
   dump(["Downloaded new scrobbles: ", scrobbles.length]);
   StorageManager.addScrobbles(scrobbles);
 
@@ -94,8 +94,8 @@ const processNewScrobbles = function(scrobbles: Scrobbles) {
   localStorageContent.textContent = StorageManager.getStorageStatusInfoJSON().readFriendlyString;
 
   const downloadedScrobbles = JSON.parse(
-    StorageManager.getScrobblesJSONString()
-      || "{ \"Error\": \"property 'scrobbles' not found in localStorage\" }"
+    StorageManager.getScrobblesJSONString() ||
+      '{ "Error": "property \'scrobbles\' not found in localStorage" }'
   );
   const textArea = <Element>document.querySelector("#textArea");
   textArea.textContent = JSON.stringify(downloadedScrobbles);
@@ -113,7 +113,7 @@ button4?.addEventListener("click", function () {
   StorageManager.addScrobbles(testScrobbles);
 });
 
-const updateLocalStorageStatus = function() {
+const updateLocalStorageStatus = function () {
   const downloadedScrobbles = StorageManager.getStorageStatusInfoJSON()?.scrobblesDownloaded;
   const span = <Element>document.querySelector("#spanStatus");
 
@@ -136,7 +136,7 @@ deserializeBtn?.addEventListener("click", () => {
   const getRecentTracksResponse: GetRecentTracksResponse = JSON.parse(text as string);
   const recentTracks: RecentTracks = {
     "@attr": getRecentTracksResponse.recenttracks["@attr"],
-    track: getRecentTracksResponse.recenttracks.track
+    track: getRecentTracksResponse.recenttracks.track,
   };
   const result = deserializeGetRecentTracksResponse(recentTracks);
   dump(result);

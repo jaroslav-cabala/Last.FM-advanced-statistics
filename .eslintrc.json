@@ -12,9 +12,8 @@
   "plugins": ["@typescript-eslint"],
   "ignorePatterns": ["/compiledJs/", "/compiledJsForTests/", "/dist/"],
   "rules": {
-    "indent": ["error", 2],
     "linebreak-style": ["error", "windows"],
-    "quotes": ["error", "double"],
+    "quotes": ["warning", "double"],
     "semi": ["error", "always"],
     "func-style": ["error", "expression"],
     "dot-location": ["error", "property"],

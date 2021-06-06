@@ -1,6 +1,9 @@
 import { dump } from "../common";
 
-export const get = function(uri: string, additionalParams: Record<string, string>[] = []): Promise<Response> {
+export const get = function (
+  uri: string,
+  additionalParams: Record<string, string>[] = []
+): Promise<Response> {
   for (const param of additionalParams) {
     uri += `&${param.name}=${param.value}`;
   }

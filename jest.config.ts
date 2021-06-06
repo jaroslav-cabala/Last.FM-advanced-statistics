@@ -7,6 +7,6 @@ const config: Config.InitialOptions = {
   },
   verbose: false,
   restoreMocks: true,
-  testTimeout: 100000
+  testTimeout: 5000
 };
 export default config;
