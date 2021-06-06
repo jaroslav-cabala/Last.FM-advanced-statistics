@@ -1,7 +1,5 @@
 describe.skip("common", () => {
   describe("retryStrategy observable", () => {
-    beforeEach(() => {});
-
     test("when max try attempts is 3, should throw an error when input action fails on 3. retry attempt", () => {
       //
     });
