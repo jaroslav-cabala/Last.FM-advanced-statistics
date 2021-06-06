@@ -13,7 +13,7 @@
   "ignorePatterns": ["/compiledJs/", "/compiledJsForTests/", "/dist/"],
   "rules": {
     "linebreak-style": ["error", "windows"],
-    "quotes": ["warning", "double"],
+    "quotes": ["warn", "double"],
     "semi": ["error", "always"],
     "func-style": ["error", "expression"],
     "dot-location": ["error", "property"],
