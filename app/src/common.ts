@@ -1,6 +1,14 @@
 import { Observable, timer } from "rxjs";
 import { mergeMap } from "rxjs/operators";
 
+export class RecentTracksDownloadFailedException extends Error{
+  public readonly name = "RecentTracksDownloadFailedException";
+
+  constructor(message: string) {
+    super(message);
+  }
+}
+
 export const getDateStringFromUts = (uts: string, locale = "en-GB"): string => {
   const date = new Date(parseInt(uts + "000"));
   return date.toLocaleString(locale);
@@ -17,17 +25,19 @@ export const retryStrategy =
   (
     retryStrategyArguments = {
       maxTryAttemps: 3,
-      retryDelay: (retryAttempt: number) => Math.pow(2, retryAttempt) * 1000,
+      retryDelay: (retryAttempt: number) => Math.pow(1, retryAttempt) * 500,
     }
   ) =>
     (attempts: any): Observable<number> => {
+      const errors: string[] = [];
       return attempts.pipe(
-        mergeMap((error, index: number) => {
+        mergeMap((error: Error, index: number) => {
+          errors.push(error.message);
           const retryCount = index + 1;
 
           if (retryCount > retryStrategyArguments.maxTryAttemps)
             throw Error(`Request failed after ${retryStrategyArguments.maxTryAttemps} retry attempts.\n
-          Original error: ${error}`);
+              Original error messages: ${errors.map(err => `[[${err}]]`)}`);
 
           const retryDelay = retryStrategyArguments.retryDelay(retryCount);
           dump([`Retrying ${retryCount}. time in ${retryDelay}ms`]);

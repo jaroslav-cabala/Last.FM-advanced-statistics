@@ -5,6 +5,8 @@ import * as StorageManager from "./scrobbleLibraryManagement/storageManager";
 import { testScrobbles } from "./files/testScrobbles";
 import { numberOfRecentTrackPagesToDownload, recentTracksPageSize, username } from "./appConfiguration";
 import { getUserInfo } from "./scrobbleLibraryManagement/downloaders/userInfo";
+import { deserializeGetRecentTracksResponse } from "./scrobbleLibraryManagement/deserializer";
+import { GetRecentTracksResponse, RecentTracks } from "./models/lastFMApiResponses";
 
 let user: User;
 StorageManager.clearStorage();
@@ -125,5 +127,19 @@ const updateLocalStorageStatus = function() {
     span.textContent = "Local storage contains all scrobbles from Last.fm!";
   }
 };
+
+//deserialize getRecentTracksResponse to Scrobbles
+const deserializeBtn = document.querySelector("#btnDeserializeToScrobbles");
+deserializeBtn?.addEventListener("click", () => {
+  const el = <HTMLTextAreaElement>document.getElementById("textAreaRecentTracksResponseJSON");
+  const text = el.value;
+  const getRecentTracksResponse: GetRecentTracksResponse = JSON.parse(text as string);
+  const recentTracks: RecentTracks = {
+    "@attr": getRecentTracksResponse.recenttracks["@attr"],
+    track: getRecentTracksResponse.recenttracks.track
+  };
+  const result = deserializeGetRecentTracksResponse(recentTracks);
+  dump(result);
+});
 
 userInfo();

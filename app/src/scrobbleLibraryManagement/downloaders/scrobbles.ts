@@ -3,7 +3,7 @@ import { catchError, concatMap, map, reduce, delay, retryWhen, tap } from "rxjs/
 
 import { get, inspectFetchResponse } from "../../httpRequest/http";
 import { deserializeGetRecentTracksResponse } from "../deserializer";
-import { dump, retryStrategy } from "../../common";
+import { dump, RecentTracksDownloadFailedException, retryStrategy } from "../../common";
 import { delayBetweenRequestForRecentTracks, getRecentTracksResourceUri } from "../../appConfiguration";
 import { GetRecentTracksResponse, RecentTracks } from "../../models/lastFMApiResponses";
 import { Scrobbles } from "../../models/domain";
@@ -12,8 +12,8 @@ export const getScrobbles$ = function(numberOfRequestToBeSent: number): Observab
   return range(1, numberOfRequestToBeSent).pipe(
     concatMap<number, Observable<RecentTracks>>((page) => getOnePageOfRecentTracks$(page)),
     catchError((error) => {
-      dump([`Could not get all scrobbles!\nError: ${error.message}`]);
-      return EMPTY;
+      dump([`Could not download all scrobbles!\nError: ${error.message}`]);
+      throw new RecentTracksDownloadFailedException(error.message);
     }),
     map<RecentTracks, Scrobbles>((recentTracks) => deserializeGetRecentTracksResponse(recentTracks)),
     reduce((accumulatorArray, currentValue) => accumulatorArray.concat(currentValue))
