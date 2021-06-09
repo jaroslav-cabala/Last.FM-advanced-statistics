@@ -7,7 +7,7 @@ import {
 import * as httpModule from "../../httpRequest/http";
 import { getScrobbles$ } from "./scrobbles";
 
-describe.only("downloaders: scrobbles", () => {
+describe("downloaders: scrobbles", () => {
   describe("getScrobbles$", () => {
     const throwErrorFn = () => {
       throw new Error();

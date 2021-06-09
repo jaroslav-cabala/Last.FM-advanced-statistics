@@ -2,7 +2,6 @@ import { dump } from "./common";
 import { Scrobbles, User } from "./models/domain";
 import * as DownloadManager from "./scrobbleLibraryManagement/downloadManager";
 import * as StorageManager from "./scrobbleLibraryManagement/storageManager";
-import { testScrobbles } from "./files/testScrobbles";
 import { numberOfRecentTrackPagesToDownload, recentTracksPageSize, username } from "./appConfiguration";
 import { getUserInfo } from "./scrobbleLibraryManagement/downloaders/userInfo";
 import { deserializeGetRecentTracksResponse } from "./scrobbleLibraryManagement/deserializer";
@@ -24,11 +23,10 @@ const userInfo = async function () {
 const button = document.querySelector("#btnDumpDownloadedScrobbles");
 button?.addEventListener("click", function () {
   const scrobbles = JSON.parse(
-    StorageManager.getScrobblesJSONString() ||
-      '{ "Error": "property \'scrobbles\' not found in localStorage" }'
+    StorageManager.getScrobblesJSON() || '{ "Error": "property \'scrobbles\' not found in localStorage" }'
   );
   const storageStatusInfo =
-    StorageManager.getStorageStatusInfoJSON().readFriendlyString ||
+    StorageManager.getStorageStatusInfo().readFriendlyString ||
     "Error: property storageStatusInfo not found in localStorage";
   dump(["scrobbles: ", scrobbles, "storageStatusInfo: ", storageStatusInfo]);
 
@@ -47,7 +45,7 @@ const startDownloadingScrobbles = async function (): Promise<void> {
   if (StorageManager.isStorageEmpty()) {
     DownloadManager.downloadScrobbles(4, numberOfRecentTrackPagesToDownload, processScrobbles);
   } else {
-    const downloadedScrobbles = StorageManager.getStorageStatusInfoJSON().scrobblesDownloaded;
+    const downloadedScrobbles = StorageManager.getStorageStatusInfo().scrobblesDownloaded;
     const pagesToDownload = Math.ceil((user.totalScrobbles - downloadedScrobbles) / recentTracksPageSize);
 
     if (pagesToDownload > 0) {
@@ -73,11 +71,10 @@ const processScrobbles = function (scrobbles: Scrobbles) {
   StorageManager.saveStorageStatusInfo(scrobbles, user.totalScrobbles - 3 * recentTracksPageSize);
 
   const localStorageContent = <Element>document.querySelector("#localStorageContent");
-  localStorageContent.textContent = StorageManager.getStorageStatusInfoJSON().readFriendlyString;
+  localStorageContent.textContent = StorageManager.getStorageStatusInfo().readFriendlyString;
 
   const downloadedScrobbles = JSON.parse(
-    StorageManager.getScrobblesJSONString() ||
-      '{ "Error": "property \'scrobbles\' not found in localStorage" }'
+    StorageManager.getScrobblesJSON() || '{ "Error": "property \'scrobbles\' not found in localStorage" }'
   );
   const textArea = <Element>document.querySelector("#textArea");
   textArea.textContent = JSON.stringify(downloadedScrobbles);
@@ -87,15 +84,14 @@ const processNewScrobbles = function (scrobbles: Scrobbles) {
   dump(["Downloaded new scrobbles: ", scrobbles.length]);
   StorageManager.addScrobbles(scrobbles);
 
-  const currentScrobblesDownloadedCount = StorageManager.getStorageStatusInfoJSON().scrobblesDownloaded;
+  const currentScrobblesDownloadedCount = StorageManager.getStorageStatusInfo().scrobblesDownloaded;
   StorageManager.saveStorageStatusInfo(scrobbles, currentScrobblesDownloadedCount + scrobbles.length);
 
   const localStorageContent = <Element>document.querySelector("#localStorageContent");
-  localStorageContent.textContent = StorageManager.getStorageStatusInfoJSON().readFriendlyString;
+  localStorageContent.textContent = StorageManager.getStorageStatusInfo().readFriendlyString;
 
   const downloadedScrobbles = JSON.parse(
-    StorageManager.getScrobblesJSONString() ||
-      '{ "Error": "property \'scrobbles\' not found in localStorage" }'
+    StorageManager.getScrobblesJSON() || '{ "Error": "property \'scrobbles\' not found in localStorage" }'
   );
   const textArea = <Element>document.querySelector("#textArea");
   textArea.textContent = JSON.stringify(downloadedScrobbles);
@@ -108,13 +104,8 @@ button3?.addEventListener("click", async function () {
   updateLocalStorageStatus();
 });
 
-const button4 = document.querySelector("#testUpdating");
-button4?.addEventListener("click", function () {
-  StorageManager.addScrobbles(testScrobbles);
-});
-
 const updateLocalStorageStatus = function () {
-  const downloadedScrobbles = StorageManager.getStorageStatusInfoJSON()?.scrobblesDownloaded;
+  const downloadedScrobbles = StorageManager.getStorageStatusInfo()?.scrobblesDownloaded;
   const span = <Element>document.querySelector("#spanStatus");
 
   if (!downloadedScrobbles) {

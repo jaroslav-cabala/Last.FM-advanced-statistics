@@ -2,7 +2,7 @@ import { StorageKeys } from "../appConfiguration";
 import { testScrobbles, testScrobbles2 } from "../files/testScrobbles";
 import * as storageManager from "./storageManager";
 
-describe.skip("StorageManager", () => {
+describe("StorageManager", () => {
   beforeEach(() => {
     localStorage.clear();
   });
@@ -51,7 +51,7 @@ describe.skip("StorageManager", () => {
 
   describe("getScrobbles()", () => {
     test("returns an array of scrobbles if there are any saved", () => {
-      jest.spyOn(storageManager, "getScrobblesJSONString").mockImplementation(() => {
+      jest.spyOn(storageManager, "getScrobblesJSON").mockImplementation(() => {
         return JSON.stringify(testScrobbles);
       });
 
@@ -61,7 +61,7 @@ describe.skip("StorageManager", () => {
     });
 
     test("returns an empty array if there are no saved scrobbles", () => {
-      jest.spyOn(storageManager, "getScrobblesJSONString").mockImplementation(() => null);
+      jest.spyOn(storageManager, "getScrobblesJSON").mockImplementation(() => null);
 
       const actual = storageManager.getScrobbles();
 

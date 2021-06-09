@@ -64,16 +64,16 @@ export class Artist {
 export class LocalStorageInfo {
   public readonly pagesDownloaded: number;
   public readonly scrobblesDownloaded: number;
-  public readonly latestDownloadedScrobble: ScrobbledTrack;
+  public readonly latestStoredScrobble: ScrobbledTrack;
   public readonly readFriendlyString: string;
   constructor(scrobbles: ScrobbledTrack[], downloadedScrobbles: number) {
     this.pagesDownloaded = Math.ceil(scrobbles.length / 200);
     this.scrobblesDownloaded = downloadedScrobbles;
     // this.scrobblesDownloaded = scrobbles.length;
-    this.latestDownloadedScrobble = scrobbles[0];
+    this.latestStoredScrobble = scrobbles[0];
     this.readFriendlyString = `Pages downloaded: ${this.pagesDownloaded},
       Scrobbles downloaded: ${this.scrobblesDownloaded},
-      Latest downloaded scrobble: ${getDateStringFromUts(this.latestDownloadedScrobble.date)}`;
+      Latest downloaded scrobble: ${getDateStringFromUts(this.latestStoredScrobble.date)}`;
   }
 }
 

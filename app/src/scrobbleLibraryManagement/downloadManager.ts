@@ -3,12 +3,12 @@ import { Subscription } from "rxjs";
 import { dump } from "../common";
 import { ScrobbledTrack, Scrobbles } from "../models/domain";
 import { getScrobbles$, getScrobblesTest$ } from "./downloaders/scrobbles";
-import { getStorageStatusInfoJSON } from "./storageManager";
+import { getStorageStatusInfo } from "./storageManager";
 
 export const downloadScrobbles = function (
   startPage: number,
   pages: number,
-  processScrobbles: (scrobbles: ScrobbledTrack[]) => void
+  processScrobbles: (scrobbles: Scrobbles) => void
 ): Subscription {
   return getScrobblesTest$(startPage, pages).subscribe({
     next: processScrobbles,
@@ -24,7 +24,7 @@ export const downloadNewScrobbles = function (
 ): Subscription {
   return getScrobbles$(pages).subscribe({
     next: (scrobbles) => {
-      const newScrobbles = extractUnsavedScrobbles(scrobbles, newScrobblesCount);
+      const newScrobbles = extractNewScrobbles(scrobbles, newScrobblesCount);
       processScrobbles(newScrobbles);
     },
     error: (err) => dump([`error in getScrobbles$ - ${err}`]),
@@ -32,45 +32,66 @@ export const downloadNewScrobbles = function (
   });
 };
 
-const extractUnsavedScrobbles = function (scrobbles: Scrobbles, newScrobblesCount: number): Scrobbles {
-  let newScrobbles: Scrobbles = [];
-
-  const storageStatusInfo = getStorageStatusInfoJSON();
-  const latestDownloadedScrobble = storageStatusInfo.latestDownloadedScrobble;
-  // const downloadedScrobbles = storageStatusInfo.scrobblesDownloaded;
-
-  newScrobbles = scrobbles.slice(0, newScrobblesCount);
-  const duplicates = scrobbles.slice(newScrobblesCount);
-
-  let isFirstDroppedScrobbleEqualToLatestStoredScrobble = true;
-  if (scrobbles.length !== newScrobblesCount) {
-    isFirstDroppedScrobbleEqualToLatestStoredScrobble = ScrobbledTrack.AreScrobblesEqual(
-      duplicates[0],
-      latestDownloadedScrobble
-    );
-  }
-  const isOldestNewScrobbleDifferentFromDifferentFromLatestStoredScrobble = !ScrobbledTrack.AreScrobblesEqual(
-    newScrobbles[newScrobbles.length - 1],
-    latestDownloadedScrobble
-  );
+export const extractNewScrobbles = function (
+  downloadedScrobbles: Scrobbles,
+  newScrobblesCount: number
+): Scrobbles {
+  const newScrobbles = downloadedScrobbles.slice(0, newScrobblesCount);
+  const alreadyDownloaded = downloadedScrobbles.slice(newScrobblesCount);
 
   if (
-    isFirstDroppedScrobbleEqualToLatestStoredScrobble &&
-    isOldestNewScrobbleDifferentFromDifferentFromLatestStoredScrobble
+    verifySuccessfulExtractionOfNewScrobbles(
+      newScrobblesCount,
+      downloadedScrobbles,
+      newScrobbles,
+      alreadyDownloaded
+    )
   ) {
     console.log("HOORAY, successfully extracted only new unsaved scrobbles!");
     return newScrobbles;
   }
 
+  const storageStatusInfo = getStorageStatusInfo();
+  const latestStoredScrobble = storageStatusInfo.latestStoredScrobble;
   console.log("OOOPS, something went wrong. Extraction of new unsaved scrobbles failed!");
   dump([
     "Latest downloaded scrobble: ",
-    latestDownloadedScrobble,
+    latestStoredScrobble,
     "First dropped scrobble: ",
-    scrobbles[newScrobblesCount],
+    downloadedScrobbles[newScrobblesCount],
     "Oldest new scrobble: ",
-    scrobbles[scrobbles.length - 1],
+    downloadedScrobbles[downloadedScrobbles.length - 1],
   ]);
 
   return [];
+};
+
+const verifySuccessfulExtractionOfNewScrobbles = (
+  newScrobblesCount: number,
+  allDownloadedScrobbles: Scrobbles,
+  newScrobbles: Scrobbles,
+  alreadyDownloadedScrobbles: Scrobbles
+): boolean => {
+  const storageStatusInfo = getStorageStatusInfo();
+  const latestStoredScrobble = storageStatusInfo.latestStoredScrobble;
+
+  let isFirstDroppedScrobbleEqualToLatestStoredScrobble = true;
+  if (allDownloadedScrobbles.length !== newScrobblesCount) {
+    isFirstDroppedScrobbleEqualToLatestStoredScrobble = ScrobbledTrack.AreScrobblesEqual(
+      alreadyDownloadedScrobbles[0],
+      latestStoredScrobble
+    );
+  }
+  const isOldestNewScrobbleDifferentFromLatestStoredScrobble = !ScrobbledTrack.AreScrobblesEqual(
+    newScrobbles[newScrobbles.length - 1],
+    latestStoredScrobble
+  );
+
+  if (
+    isFirstDroppedScrobbleEqualToLatestStoredScrobble &&
+    isOldestNewScrobbleDifferentFromLatestStoredScrobble
+  ) {
+    return true;
+  }
+  return false;
 };

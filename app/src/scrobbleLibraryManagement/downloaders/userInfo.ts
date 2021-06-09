@@ -1,7 +1,7 @@
 import { defer, from } from "rxjs";
 import { concatMap, map, retryWhen, tap } from "rxjs/operators";
 
-import { getUserInfoResourceUri } from "../../appConfiguration";
+import { defaultRetryStrategySettings, getUserInfoResourceUri } from "../../appConfiguration";
 import { retryStrategy } from "../../common";
 import { get, inspectFetchResponse } from "../../httpRequest/http";
 import { User } from "../../models/domain";
@@ -17,7 +17,7 @@ export const getUserInfo = function (username: string): Promise<User> {
       tap({
         next: () => console.log("User info obtained!"),
       }),
-      retryWhen(retryStrategy())
+      retryWhen(retryStrategy(defaultRetryStrategySettings))
     )
     .toPromise();
 };

@@ -699,6 +699,908 @@ export const testDeserializedScrobblesPage2: Scrobbles = [
   },
 ];
 
+export const testGetRecentTracksResponseWithSomeAlreadySavedScrobblesJSON = `
+{
+  "recenttracks": {
+      "@attr": {
+          "page": "709",
+          "total": "98908",
+          "user": "rikishiyayo",
+          "perPage": "8",
+          "totalPages": "12364"
+      },
+      "track": [
+          {
+              "artist": {
+                  "mbid": "",
+                  "#text": "Gojira"
+              },
+              "@attr": {
+                  "nowplaying": "true"
+              },
+              "mbid": "014b7d61-e8f5-4b94-bd33-92d579f8c10c",
+              "album": {
+                  "mbid": "02c95026-ba08-48a4-8488-2b3d638383d4",
+                  "#text": "From Mars to Sirius"
+              },
+              "streamable": "0",
+              "url": "https://www.last.fm/music/Gojira/_/World+to+Come",
+              "name": "World to Come",
+              "image": [
+                  {
+                      "size": "small",
+                      "#text": "https://lastfm.freetls.fastly.net/i/u/34s/881cda5e2542fbaa21c99b35e7228960.jpg"
+                  },
+                  {
+                      "size": "medium",
+                      "#text": "https://lastfm.freetls.fastly.net/i/u/64s/881cda5e2542fbaa21c99b35e7228960.jpg"
+                  },
+                  {
+                      "size": "large",
+                      "#text": "https://lastfm.freetls.fastly.net/i/u/174s/881cda5e2542fbaa21c99b35e7228960.jpg"
+                  },
+                  {
+                      "size": "extralarge",
+                      "#text": "https://lastfm.freetls.fastly.net/i/u/300x300/881cda5e2542fbaa21c99b35e7228960.jpg"
+                  }
+              ]
+          },
+          {
+              "artist": {
+                  "mbid": "68bd8072-0412-44b1-81dd-807aa6c1918c",
+                  "#text": "Bolt Thrower"
+              },
+              "album": {
+                  "mbid": "",
+                  "#text": "For Victory"
+              },
+              "image": [
+                  {
+                      "size": "small",
+                      "#text": "https://lastfm.freetls.fastly.net/i/u/34s/eb477dd6d83e4daa9c9ad660ae577d93.jpg"
+                  },
+                  {
+                      "size": "medium",
+                      "#text": "https://lastfm.freetls.fastly.net/i/u/64s/eb477dd6d83e4daa9c9ad660ae577d93.jpg"
+                  },
+                  {
+                      "size": "large",
+                      "#text": "https://lastfm.freetls.fastly.net/i/u/174s/eb477dd6d83e4daa9c9ad660ae577d93.jpg"
+                  },
+                  {
+                      "size": "extralarge",
+                      "#text": "https://lastfm.freetls.fastly.net/i/u/300x300/eb477dd6d83e4daa9c9ad660ae577d93.jpg"
+                  }
+              ],
+              "streamable": "0",
+              "date": {
+                  "uts": "1615746720",
+                  "#text": "14 Mar 2021, 18:32"
+              },
+              "url": "https://www.last.fm/music/Bolt+Thrower/_/When+Glory+Beckons",
+              "name": "When Glory Beckons",
+              "mbid": "08e17abf-bb46-39f1-98fa-a9fa6bf62b8f"
+          },
+          {
+              "artist": {
+                  "mbid": "68bd8072-0412-44b1-81dd-807aa6c1918c",
+                  "#text": "Bolt Thrower"
+              },
+              "album": {
+                  "mbid": "",
+                  "#text": "For Victory"
+              },
+              "image": [
+                  {
+                      "size": "small",
+                      "#text": "https://lastfm.freetls.fastly.net/i/u/34s/eb477dd6d83e4daa9c9ad660ae577d93.jpg"
+                  },
+                  {
+                      "size": "medium",
+                      "#text": "https://lastfm.freetls.fastly.net/i/u/64s/eb477dd6d83e4daa9c9ad660ae577d93.jpg"
+                  },
+                  {
+                      "size": "large",
+                      "#text": "https://lastfm.freetls.fastly.net/i/u/174s/eb477dd6d83e4daa9c9ad660ae577d93.jpg"
+                  },
+                  {
+                      "size": "extralarge",
+                      "#text": "https://lastfm.freetls.fastly.net/i/u/300x300/eb477dd6d83e4daa9c9ad660ae577d93.jpg"
+                  }
+              ],
+              "streamable": "0",
+              "date": {
+                  "uts": "1615746497",
+                  "#text": "14 Mar 2021, 18:28"
+              },
+              "url": "https://www.last.fm/music/Bolt+Thrower/_/Remembrance",
+              "name": "Remembrance",
+              "mbid": "084ed521-3156-454c-97a5-902e42b9fa2c"
+          },
+          {
+              "artist": {
+                  "mbid": "68bd8072-0412-44b1-81dd-807aa6c1918c",
+                  "#text": "Bolt Thrower"
+              },
+              "album": {
+                  "mbid": "",
+                  "#text": "For Victory"
+              },
+              "image": [
+                  {
+                      "size": "small",
+                      "#text": "https://lastfm.freetls.fastly.net/i/u/34s/eb477dd6d83e4daa9c9ad660ae577d93.jpg"
+                  },
+                  {
+                      "size": "medium",
+                      "#text": "https://lastfm.freetls.fastly.net/i/u/64s/eb477dd6d83e4daa9c9ad660ae577d93.jpg"
+                  },
+                  {
+                      "size": "large",
+                      "#text": "https://lastfm.freetls.fastly.net/i/u/174s/eb477dd6d83e4daa9c9ad660ae577d93.jpg"
+                  },
+                  {
+                      "size": "extralarge",
+                      "#text": "https://lastfm.freetls.fastly.net/i/u/300x300/eb477dd6d83e4daa9c9ad660ae577d93.jpg"
+                  }
+              ],
+              "streamable": "0",
+              "date": {
+                  "uts": "1615746420",
+                  "#text": "14 Mar 2021, 18:27"
+              },
+              "url": "https://www.last.fm/music/Bolt+Thrower/_/War",
+              "name": "War",
+              "mbid": "10c72342-f2af-4851-8a5e-7adac5fe7b68"
+          },
+          {
+              "artist": {
+                  "mbid": "4a069b08-e31c-44c0-94dd-b3b49ed7c0da",
+                  "#text": "Catastrofy"
+              },
+              "album": {
+                  "mbid": "f443d97f-957e-4cf3-8c2a-b8311ccc59f1",
+                  "#text": "Besnota"
+              },
+              "image": [
+                  {
+                      "size": "small",
+                      "#text": "https://lastfm.freetls.fastly.net/i/u/34s/61af32e5f121eb7b217b66571b6e54bf.jpg"
+                  },
+                  {
+                      "size": "medium",
+                      "#text": "https://lastfm.freetls.fastly.net/i/u/64s/61af32e5f121eb7b217b66571b6e54bf.jpg"
+                  },
+                  {
+                      "size": "large",
+                      "#text": "https://lastfm.freetls.fastly.net/i/u/174s/61af32e5f121eb7b217b66571b6e54bf.jpg"
+                  },
+                  {
+                      "size": "extralarge",
+                      "#text": "https://lastfm.freetls.fastly.net/i/u/300x300/61af32e5f121eb7b217b66571b6e54bf.jpg"
+                  }
+              ],
+              "streamable": "0",
+              "date": {
+                  "uts": "1615743290",
+                  "#text": "14 Mar 2021, 17:34"
+              },
+              "url": "https://www.last.fm/music/Catastrofy/_/Jebem+va%C5%A1e+idoly",
+              "name": "Jebem vaše idoly",
+              "mbid": "4da64b1f-ca5e-4a61-9a36-c437212fc058"
+          },
+          {
+              "artist": {
+                  "mbid": "4a069b08-e31c-44c0-94dd-b3b49ed7c0da",
+                  "#text": "Catastrofy"
+              },
+              "album": {
+                  "mbid": "5c2c775b-5b6d-42d5-9c4b-c7f0008e444d",
+                  "#text": "Zbojnícky Tanec"
+              },
+              "image": [
+                  {
+                      "size": "small",
+                      "#text": "https://lastfm.freetls.fastly.net/i/u/34s/a0ff5d8cfb64baf554a4656696062b34.jpg"
+                  },
+                  {
+                      "size": "medium",
+                      "#text": "https://lastfm.freetls.fastly.net/i/u/64s/a0ff5d8cfb64baf554a4656696062b34.jpg"
+                  },
+                  {
+                      "size": "large",
+                      "#text": "https://lastfm.freetls.fastly.net/i/u/174s/a0ff5d8cfb64baf554a4656696062b34.jpg"
+                  },
+                  {
+                      "size": "extralarge",
+                      "#text": "https://lastfm.freetls.fastly.net/i/u/300x300/a0ff5d8cfb64baf554a4656696062b34.jpg"
+                  }
+              ],
+              "streamable": "0",
+              "date": {
+                  "uts": "1615743063",
+                  "#text": "14 Mar 2021, 17:31"
+              },
+              "url": "https://www.last.fm/music/Catastrofy/_/Bastardi+spolo%C4%8Dnosti",
+              "name": "Bastardi spoločnosti",
+              "mbid": "2a0e7fa5-e535-4a8c-b726-aff5fe0caaca"
+          },
+          {
+              "artist": {
+                  "mbid": "4a069b08-e31c-44c0-94dd-b3b49ed7c0da",
+                  "#text": "Catastrofy"
+              },
+              "album": {
+                  "mbid": "5c2c775b-5b6d-42d5-9c4b-c7f0008e444d",
+                  "#text": "Zbojnícky Tanec"
+              },
+              "image": [
+                  {
+                      "size": "small",
+                      "#text": "https://lastfm.freetls.fastly.net/i/u/34s/a0ff5d8cfb64baf554a4656696062b34.jpg"
+                  },
+                  {
+                      "size": "medium",
+                      "#text": "https://lastfm.freetls.fastly.net/i/u/64s/a0ff5d8cfb64baf554a4656696062b34.jpg"
+                  },
+                  {
+                      "size": "large",
+                      "#text": "https://lastfm.freetls.fastly.net/i/u/174s/a0ff5d8cfb64baf554a4656696062b34.jpg"
+                  },
+                  {
+                      "size": "extralarge",
+                      "#text": "https://lastfm.freetls.fastly.net/i/u/300x300/a0ff5d8cfb64baf554a4656696062b34.jpg"
+                  }
+              ],
+              "streamable": "0",
+              "date": {
+                  "uts": "1615742250",
+                  "#text": "14 Mar 2021, 17:17"
+              },
+              "url": "https://www.last.fm/music/Catastrofy/_/Zbojn%C3%ADci+Apokalypsy",
+              "name": "Zbojníci Apokalypsy",
+              "mbid": "6612401f-f5d0-4e4f-9bf7-fcdff8e6d0c3"
+          },
+          {
+              "artist": {
+                  "mbid": "4a069b08-e31c-44c0-94dd-b3b49ed7c0da",
+                  "#text": "Catastrofy"
+              },
+              "album": {
+                  "mbid": "5c2c775b-5b6d-42d5-9c4b-c7f0008e444d",
+                  "#text": "Zbojnícky Tanec"
+              },
+              "image": [
+                  {
+                      "size": "small",
+                      "#text": "https://lastfm.freetls.fastly.net/i/u/34s/a0ff5d8cfb64baf554a4656696062b34.jpg"
+                  },
+                  {
+                      "size": "medium",
+                      "#text": "https://lastfm.freetls.fastly.net/i/u/64s/a0ff5d8cfb64baf554a4656696062b34.jpg"
+                  },
+                  {
+                      "size": "large",
+                      "#text": "https://lastfm.freetls.fastly.net/i/u/174s/a0ff5d8cfb64baf554a4656696062b34.jpg"
+                  },
+                  {
+                      "size": "extralarge",
+                      "#text": "https://lastfm.freetls.fastly.net/i/u/300x300/a0ff5d8cfb64baf554a4656696062b34.jpg"
+                  }
+              ],
+              "streamable": "0",
+              "date": {
+                  "uts": "1615741843",
+                  "#text": "14 Mar 2021, 17:10"
+              },
+              "url": "https://www.last.fm/music/Catastrofy/_/Zbojn%C3%ADci+Apokalypsy",
+              "name": "Zbojníci Apokalypsy",
+              "mbid": "6612401f-f5d0-4e4f-9bf7-fcdff8e6d0c3"
+          },
+          {
+              "artist": {
+                  "mbid": "4a069b08-e31c-44c0-94dd-b3b49ed7c0da",
+                  "#text": "Catastrofy"
+              },
+              "album": {
+                  "mbid": "5c2c775b-5b6d-42d5-9c4b-c7f0008e444d",
+                  "#text": "Zbojnícky Tanec"
+              },
+              "image": [
+                  {
+                      "size": "small",
+                      "#text": "https://lastfm.freetls.fastly.net/i/u/34s/a0ff5d8cfb64baf554a4656696062b34.jpg"
+                  },
+                  {
+                      "size": "medium",
+                      "#text": "https://lastfm.freetls.fastly.net/i/u/64s/a0ff5d8cfb64baf554a4656696062b34.jpg"
+                  },
+                  {
+                      "size": "large",
+                      "#text": "https://lastfm.freetls.fastly.net/i/u/174s/a0ff5d8cfb64baf554a4656696062b34.jpg"
+                  },
+                  {
+                      "size": "extralarge",
+                      "#text": "https://lastfm.freetls.fastly.net/i/u/300x300/a0ff5d8cfb64baf554a4656696062b34.jpg"
+                  }
+              ],
+              "streamable": "0",
+              "date": {
+                  "uts": "1615741543",
+                  "#text": "14 Mar 2021, 17:05"
+              },
+              "url": "https://www.last.fm/music/Catastrofy/_/Zbojn%C3%ADci+Apokalypsy",
+              "name": "Zbojníci Apokalypsy",
+              "mbid": "6612401f-f5d0-4e4f-9bf7-fcdff8e6d0c3"
+          },
+          {
+              "artist": {
+                  "mbid": "4a069b08-e31c-44c0-94dd-b3b49ed7c0da",
+                  "#text": "Catastrofy"
+              },
+              "album": {
+                  "mbid": "5c2c775b-5b6d-42d5-9c4b-c7f0008e444d",
+                  "#text": "Zbojnícky Tanec"
+              },
+              "image": [
+                  {
+                      "size": "small",
+                      "#text": "https://lastfm.freetls.fastly.net/i/u/34s/a0ff5d8cfb64baf554a4656696062b34.jpg"
+                  },
+                  {
+                      "size": "medium",
+                      "#text": "https://lastfm.freetls.fastly.net/i/u/64s/a0ff5d8cfb64baf554a4656696062b34.jpg"
+                  },
+                  {
+                      "size": "large",
+                      "#text": "https://lastfm.freetls.fastly.net/i/u/174s/a0ff5d8cfb64baf554a4656696062b34.jpg"
+                  },
+                  {
+                      "size": "extralarge",
+                      "#text": "https://lastfm.freetls.fastly.net/i/u/300x300/a0ff5d8cfb64baf554a4656696062b34.jpg"
+                  }
+              ],
+              "streamable": "0",
+              "date": {
+                  "uts": "1615741476",
+                  "#text": "14 Mar 2021, 17:04"
+              },
+              "url": "https://www.last.fm/music/Catastrofy/_/Anci%C3%A1%C5%A1a,+zmr%C3%A1ka+sa!",
+              "name": "Anciáša, zmráka sa!",
+              "mbid": "aeee2b1b-7b87-483f-bb9f-c18870bb7d27"
+          },
+          {
+              "artist": {
+                  "mbid": "d50a4b89-ff1f-4659-9fde-f76f8d5b3c89",
+                  "#text": "Carcass"
+              },
+              "album": {
+                  "mbid": "05762b6e-a65e-439e-a7a1-a5a66f4a8bd3",
+                  "#text": "Surgical Steel"
+              },
+              "image": [
+                  {
+                      "size": "small",
+                      "#text": "https://lastfm.freetls.fastly.net/i/u/34s/8dc6e3d38182c5446b6a04362312c27c.png"
+                  },
+                  {
+                      "size": "medium",
+                      "#text": "https://lastfm.freetls.fastly.net/i/u/64s/8dc6e3d38182c5446b6a04362312c27c.png"
+                  },
+                  {
+                      "size": "large",
+                      "#text": "https://lastfm.freetls.fastly.net/i/u/174s/8dc6e3d38182c5446b6a04362312c27c.png"
+                  },
+                  {
+                      "size": "extralarge",
+                      "#text": "https://lastfm.freetls.fastly.net/i/u/300x300/8dc6e3d38182c5446b6a04362312c27c.png"
+                  }
+              ],
+              "streamable": "0",
+              "date": {
+                  "uts": "1615741192",
+                  "#text": "14 Mar 2021, 16:59"
+              },
+              "url": "https://www.last.fm/music/Carcass/_/Intensive+Battery+Brooding",
+              "name": "Intensive Battery Brooding",
+              "mbid": "1c214788-3841-467e-8502-ce93e2c82063"
+          }
+      ]
+  }
+}`;
+
+export const testDeserializedGetRecentTracksResponseWithSomeAlreadySavedScrobblesJSON = [
+  {
+    mbid: "08e17abf-bb46-39f1-98fa-a9fa6bf62b8f",
+    name: "When Glory Beckons",
+    album: {
+      mbid: "",
+      name: "For Victory",
+      artist: {
+        mbid: "68bd8072-0412-44b1-81dd-807aa6c1918c",
+        name: "Bolt Thrower",
+        country: "",
+        image: "",
+        url: "",
+      },
+      releaseDate: "",
+      image: "",
+      url: "",
+    },
+    artist: {
+      mbid: "68bd8072-0412-44b1-81dd-807aa6c1918c",
+      name: "Bolt Thrower",
+      country: "",
+      image: "",
+      url: "",
+    },
+    url: "https://www.last.fm/music/Bolt+Thrower/_/When+Glory+Beckons",
+    date: "1615746720",
+  },
+  {
+    mbid: "084ed521-3156-454c-97a5-902e42b9fa2c",
+    name: "Remembrance",
+    album: {
+      mbid: "",
+      name: "For Victory",
+      artist: {
+        mbid: "68bd8072-0412-44b1-81dd-807aa6c1918c",
+        name: "Bolt Thrower",
+        country: "",
+        image: "",
+        url: "",
+      },
+      releaseDate: "",
+      image: "",
+      url: "",
+    },
+    artist: {
+      mbid: "68bd8072-0412-44b1-81dd-807aa6c1918c",
+      name: "Bolt Thrower",
+      country: "",
+      image: "",
+      url: "",
+    },
+    url: "https://www.last.fm/music/Bolt+Thrower/_/Remembrance",
+    date: "1615746497",
+  },
+  {
+    mbid: "10c72342-f2af-4851-8a5e-7adac5fe7b68",
+    name: "War",
+    album: {
+      mbid: "",
+      name: "For Victory",
+      artist: {
+        mbid: "68bd8072-0412-44b1-81dd-807aa6c1918c",
+        name: "Bolt Thrower",
+        country: "",
+        image: "",
+        url: "",
+      },
+      releaseDate: "",
+      image: "",
+      url: "",
+    },
+    artist: {
+      mbid: "68bd8072-0412-44b1-81dd-807aa6c1918c",
+      name: "Bolt Thrower",
+      country: "",
+      image: "",
+      url: "",
+    },
+    url: "https://www.last.fm/music/Bolt+Thrower/_/War",
+    date: "1615746420",
+  },
+  {
+    mbid: "4da64b1f-ca5e-4a61-9a36-c437212fc058",
+    name: "Jebem vaše idoly",
+    album: {
+      mbid: "f443d97f-957e-4cf3-8c2a-b8311ccc59f1",
+      name: "Besnota",
+      artist: {
+        mbid: "4a069b08-e31c-44c0-94dd-b3b49ed7c0da",
+        name: "Catastrofy",
+        country: "",
+        image: "",
+        url: "",
+      },
+      releaseDate: "",
+      image: "",
+      url: "",
+    },
+    artist: {
+      mbid: "4a069b08-e31c-44c0-94dd-b3b49ed7c0da",
+      name: "Catastrofy",
+      country: "",
+      image: "",
+      url: "",
+    },
+    url: "https://www.last.fm/music/Catastrofy/_/Jebem+va%C5%A1e+idoly",
+    date: "1615743290",
+  },
+  {
+    mbid: "2a0e7fa5-e535-4a8c-b726-aff5fe0caaca",
+    name: "Bastardi spoločnosti",
+    album: {
+      mbid: "5c2c775b-5b6d-42d5-9c4b-c7f0008e444d",
+      name: "Zbojnícky Tanec",
+      artist: {
+        mbid: "4a069b08-e31c-44c0-94dd-b3b49ed7c0da",
+        name: "Catastrofy",
+        country: "",
+        image: "",
+        url: "",
+      },
+      releaseDate: "",
+      image: "",
+      url: "",
+    },
+    artist: {
+      mbid: "4a069b08-e31c-44c0-94dd-b3b49ed7c0da",
+      name: "Catastrofy",
+      country: "",
+      image: "",
+      url: "",
+    },
+    url: "https://www.last.fm/music/Catastrofy/_/Bastardi+spolo%C4%8Dnosti",
+    date: "1615743063",
+  },
+  {
+    mbid: "6612401f-f5d0-4e4f-9bf7-fcdff8e6d0c3",
+    name: "Zbojníci Apokalypsy",
+    album: {
+      mbid: "5c2c775b-5b6d-42d5-9c4b-c7f0008e444d",
+      name: "Zbojnícky Tanec",
+      artist: {
+        mbid: "4a069b08-e31c-44c0-94dd-b3b49ed7c0da",
+        name: "Catastrofy",
+        country: "",
+        image: "",
+        url: "",
+      },
+      releaseDate: "",
+      image: "",
+      url: "",
+    },
+    artist: {
+      mbid: "4a069b08-e31c-44c0-94dd-b3b49ed7c0da",
+      name: "Catastrofy",
+      country: "",
+      image: "",
+      url: "",
+    },
+    url: "https://www.last.fm/music/Catastrofy/_/Zbojn%C3%ADci+Apokalypsy",
+    date: "1615742250",
+  },
+  {
+    mbid: "6612401f-f5d0-4e4f-9bf7-fcdff8e6d0c3",
+    name: "Zbojníci Apokalypsy",
+    album: {
+      mbid: "5c2c775b-5b6d-42d5-9c4b-c7f0008e444d",
+      name: "Zbojnícky Tanec",
+      artist: {
+        mbid: "4a069b08-e31c-44c0-94dd-b3b49ed7c0da",
+        name: "Catastrofy",
+        country: "",
+        image: "",
+        url: "",
+      },
+      releaseDate: "",
+      image: "",
+      url: "",
+    },
+    artist: {
+      mbid: "4a069b08-e31c-44c0-94dd-b3b49ed7c0da",
+      name: "Catastrofy",
+      country: "",
+      image: "",
+      url: "",
+    },
+    url: "https://www.last.fm/music/Catastrofy/_/Zbojn%C3%ADci+Apokalypsy",
+    date: "1615741843",
+  },
+  {
+    mbid: "6612401f-f5d0-4e4f-9bf7-fcdff8e6d0c3",
+    name: "Zbojníci Apokalypsy",
+    album: {
+      mbid: "5c2c775b-5b6d-42d5-9c4b-c7f0008e444d",
+      name: "Zbojnícky Tanec",
+      artist: {
+        mbid: "4a069b08-e31c-44c0-94dd-b3b49ed7c0da",
+        name: "Catastrofy",
+        country: "",
+        image: "",
+        url: "",
+      },
+      releaseDate: "",
+      image: "",
+      url: "",
+    },
+    artist: {
+      mbid: "4a069b08-e31c-44c0-94dd-b3b49ed7c0da",
+      name: "Catastrofy",
+      country: "",
+      image: "",
+      url: "",
+    },
+    url: "https://www.last.fm/music/Catastrofy/_/Zbojn%C3%ADci+Apokalypsy",
+    date: "1615741543",
+  },
+  {
+    mbid: "aeee2b1b-7b87-483f-bb9f-c18870bb7d27",
+    name: "Anciáša, zmráka sa!",
+    album: {
+      mbid: "5c2c775b-5b6d-42d5-9c4b-c7f0008e444d",
+      name: "Zbojnícky Tanec",
+      artist: {
+        mbid: "4a069b08-e31c-44c0-94dd-b3b49ed7c0da",
+        name: "Catastrofy",
+        country: "",
+        image: "",
+        url: "",
+      },
+      releaseDate: "",
+      image: "",
+      url: "",
+    },
+    artist: {
+      mbid: "4a069b08-e31c-44c0-94dd-b3b49ed7c0da",
+      name: "Catastrofy",
+      country: "",
+      image: "",
+      url: "",
+    },
+    url: "https://www.last.fm/music/Catastrofy/_/Anci%C3%A1%C5%A1a,+zmr%C3%A1ka+sa!",
+    date: "1615741476",
+  },
+  {
+    mbid: "1c214788-3841-467e-8502-ce93e2c82063",
+    name: "Intensive Battery Brooding",
+    album: {
+      mbid: "05762b6e-a65e-439e-a7a1-a5a66f4a8bd3",
+      name: "Surgical Steel",
+      artist: {
+        mbid: "d50a4b89-ff1f-4659-9fde-f76f8d5b3c89",
+        name: "Carcass",
+        country: "",
+        image: "",
+        url: "",
+      },
+      releaseDate: "",
+      image: "",
+      url: "",
+    },
+    artist: {
+      mbid: "d50a4b89-ff1f-4659-9fde-f76f8d5b3c89",
+      name: "Carcass",
+      country: "",
+      image: "",
+      url: "",
+    },
+    url: "https://www.last.fm/music/Carcass/_/Intensive+Battery+Brooding",
+    date: "1615741192",
+  },
+];
+
+export const testSavedScrobbles: Scrobbles = [
+  {
+    mbid: "6612401f-f5d0-4e4f-9bf7-fcdff8e6d0c3",
+    name: "Zbojníci Apokalypsy",
+    album: {
+      mbid: "5c2c775b-5b6d-42d5-9c4b-c7f0008e444d",
+      name: "Zbojnícky Tanec",
+      artist: {
+        mbid: "4a069b08-e31c-44c0-94dd-b3b49ed7c0da",
+        name: "Catastrofy",
+        country: "",
+        image: "",
+        url: "",
+      },
+      releaseDate: "",
+      image: "",
+      url: "",
+    },
+    artist: {
+      mbid: "4a069b08-e31c-44c0-94dd-b3b49ed7c0da",
+      name: "Catastrofy",
+      country: "",
+      image: "",
+      url: "",
+    },
+    url: "https://www.last.fm/music/Catastrofy/_/Zbojn%C3%ADci+Apokalypsy",
+    date: "1615741543",
+  },
+  {
+    mbid: "aeee2b1b-7b87-483f-bb9f-c18870bb7d27",
+    name: "Anciáša, zmráka sa!",
+    album: {
+      mbid: "5c2c775b-5b6d-42d5-9c4b-c7f0008e444d",
+      name: "Zbojnícky Tanec",
+      artist: {
+        mbid: "4a069b08-e31c-44c0-94dd-b3b49ed7c0da",
+        name: "Catastrofy",
+        country: "",
+        image: "",
+        url: "",
+      },
+      releaseDate: "",
+      image: "",
+      url: "",
+    },
+    artist: {
+      mbid: "4a069b08-e31c-44c0-94dd-b3b49ed7c0da",
+      name: "Catastrofy",
+      country: "",
+      image: "",
+      url: "",
+    },
+    url: "https://www.last.fm/music/Catastrofy/_/Anci%C3%A1%C5%A1a,+zmr%C3%A1ka+sa!",
+    date: "1615741476",
+  },
+  {
+    mbid: "1c214788-3841-467e-8502-ce93e2c82063",
+    name: "Intensive Battery Brooding",
+    album: {
+      mbid: "05762b6e-a65e-439e-a7a1-a5a66f4a8bd3",
+      name: "Surgical Steel",
+      artist: {
+        mbid: "d50a4b89-ff1f-4659-9fde-f76f8d5b3c89",
+        name: "Carcass",
+        country: "",
+        image: "",
+        url: "",
+      },
+      releaseDate: "",
+      image: "",
+      url: "",
+    },
+    artist: {
+      mbid: "d50a4b89-ff1f-4659-9fde-f76f8d5b3c89",
+      name: "Carcass",
+      country: "",
+      image: "",
+      url: "",
+    },
+    url: "https://www.last.fm/music/Carcass/_/Intensive+Battery+Brooding",
+    date: "1615741192",
+  },
+  {
+    mbid: "34def34f-21d6-4ce6-af41-334b7555dcc7",
+    name: "Mount Of Execution",
+    album: {
+      mbid: "05762b6e-a65e-439e-a7a1-a5a66f4a8bd3",
+      name: "Surgical Steel",
+      artist: {
+        mbid: "d50a4b89-ff1f-4659-9fde-f76f8d5b3c89",
+        name: "Carcass",
+        country: "",
+        image: "",
+        url: "",
+      },
+      releaseDate: "",
+      image: "",
+      url: "",
+    },
+    artist: {
+      mbid: "d50a4b89-ff1f-4659-9fde-f76f8d5b3c89",
+      name: "Carcass",
+      country: "",
+      image: "",
+      url: "",
+    },
+    url: "https://www.last.fm/music/Carcass/_/Mount+Of+Execution",
+    date: "1615740678",
+  },
+  {
+    mbid: "1baef17d-ab72-44da-9b26-df0d770df7e1",
+    name: "Captive Bolt Pistol",
+    album: {
+      mbid: "05762b6e-a65e-439e-a7a1-a5a66f4a8bd3",
+      name: "Surgical Steel",
+      artist: {
+        mbid: "d50a4b89-ff1f-4659-9fde-f76f8d5b3c89",
+        name: "Carcass",
+        country: "",
+        image: "",
+        url: "",
+      },
+      releaseDate: "",
+      image: "",
+      url: "",
+    },
+    artist: {
+      mbid: "d50a4b89-ff1f-4659-9fde-f76f8d5b3c89",
+      name: "Carcass",
+      country: "",
+      image: "",
+      url: "",
+    },
+    url: "https://www.last.fm/music/Carcass/_/Captive+Bolt+Pistol",
+    date: "1615740481",
+  },
+  {
+    mbid: "04fa6bd7-0303-4f3b-a873-25437952e941",
+    name: "316L Grade Surgical Steel",
+    album: {
+      mbid: "05762b6e-a65e-439e-a7a1-a5a66f4a8bd3",
+      name: "Surgical Steel",
+      artist: {
+        mbid: "d50a4b89-ff1f-4659-9fde-f76f8d5b3c89",
+        name: "Carcass",
+        country: "",
+        image: "",
+        url: "",
+      },
+      releaseDate: "",
+      image: "",
+      url: "",
+    },
+    artist: {
+      mbid: "d50a4b89-ff1f-4659-9fde-f76f8d5b3c89",
+      name: "Carcass",
+      country: "",
+      image: "",
+      url: "",
+    },
+    url: "https://www.last.fm/music/Carcass/_/316L+Grade+Surgical+Steel",
+    date: "1615740161",
+  },
+  {
+    mbid: "27d981f7-ea0d-3d8b-98f3-d23bff5ea18f",
+    name: "Corporal Jigsore Quandary",
+    album: {
+      mbid: "12861e13-dce8-41ac-991f-6bcb09e2659c",
+      name: "Necroticism: Descanting the Insalubrious",
+      artist: {
+        mbid: "d50a4b89-ff1f-4659-9fde-f76f8d5b3c89",
+        name: "Carcass",
+        country: "",
+        image: "",
+        url: "",
+      },
+      releaseDate: "",
+      image: "",
+      url: "",
+    },
+    artist: {
+      mbid: "d50a4b89-ff1f-4659-9fde-f76f8d5b3c89",
+      name: "Carcass",
+      country: "",
+      image: "",
+      url: "",
+    },
+    url: "https://www.last.fm/music/Carcass/_/Corporal+Jigsore+Quandary",
+    date: "1615739821",
+  },
+  {
+    mbid: "18145c78-d070-4f8f-bfbe-2452b2996fbd",
+    name: "Unfit For Human Consumption",
+    album: {
+      mbid: "05762b6e-a65e-439e-a7a1-a5a66f4a8bd3",
+      name: "Surgical Steel",
+      artist: {
+        mbid: "d50a4b89-ff1f-4659-9fde-f76f8d5b3c89",
+        name: "Carcass",
+        country: "",
+        image: "",
+        url: "",
+      },
+      releaseDate: "",
+      image: "",
+      url: "",
+    },
+    artist: {
+      mbid: "d50a4b89-ff1f-4659-9fde-f76f8d5b3c89",
+      name: "Carcass",
+      country: "",
+      image: "",
+      url: "",
+    },
+    url: "https://www.last.fm/music/Carcass/_/Unfit+For+Human+Consumption",
+    date: "1615739556",
+  },
+];
+
 export const testScrobbles: Scrobbles = [
   {
     mbid: "TEST",
