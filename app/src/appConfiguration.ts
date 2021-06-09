@@ -1,3 +1,5 @@
+import { RetryStrategySettings } from "./common";
+
 export enum StorageKeys {
   scrobbles = "scrobbles",
   storageStatusInfo = "storageStatusInfo",
@@ -23,3 +25,8 @@ export const resourceUris = [
   `https://ws.audioscrobbler.com/2.0/?format=json&method=user.getRecentTtracks&limit=200&user=rikishiyayo
     &from&to&api_key=d3b15cefdfc22c908467b6972ad2f661`,
 ];
+
+export const defaultRetryStrategySettings: RetryStrategySettings = {
+  maxTryAttempts: 3,
+  retryDelay: (retryAttempt: number) => Math.pow(2, retryAttempt) * 1000,
+};

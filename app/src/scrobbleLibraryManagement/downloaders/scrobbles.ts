@@ -3,14 +3,28 @@ import { catchError, concatMap, map, reduce, delay, retryWhen, tap } from "rxjs/
 
 import { get, inspectFetchResponse } from "../../httpRequest/http";
 import { deserializeGetRecentTracksResponse } from "../deserializer";
-import { dump, RecentTracksDownloadFailedException, retryStrategy } from "../../common";
-import { delayBetweenRequestForRecentTracks, getRecentTracksResourceUri } from "../../appConfiguration";
+import {
+  dump,
+  RecentTracksDownloadFailedException,
+  retryStrategy,
+  RetryStrategySettings,
+} from "../../common";
+import {
+  defaultRetryStrategySettings,
+  delayBetweenRequestForRecentTracks,
+  getRecentTracksResourceUri,
+} from "../../appConfiguration";
 import { GetRecentTracksResponse, RecentTracks } from "../../models/lastFMApiResponses";
 import { Scrobbles } from "../../models/domain";
 
-export const getScrobbles$ = function (numberOfRequestToBeSent: number): Observable<Scrobbles> {
+export const getScrobbles$ = function (
+  numberOfRequestToBeSent: number,
+  retryStrategySettings?: RetryStrategySettings
+): Observable<Scrobbles> {
   return range(1, numberOfRequestToBeSent).pipe(
-    concatMap<number, Observable<RecentTracks>>((page) => getOnePageOfRecentTracks$(page)),
+    concatMap<number, Observable<RecentTracks>>((page) =>
+      getOnePageOfRecentTracks$(page, retryStrategySettings)
+    ),
     catchError((error) => {
       dump([`Could not download all scrobbles!\nError: ${error.message}`]);
       throw new RecentTracksDownloadFailedException(error.message);
@@ -20,7 +34,10 @@ export const getScrobbles$ = function (numberOfRequestToBeSent: number): Observa
   );
 };
 
-const getOnePageOfRecentTracks$ = function (pageNumber: number): Observable<RecentTracks> {
+const getOnePageOfRecentTracks$ = function (
+  pageNumber: number,
+  retryStrategySettings?: RetryStrategySettings
+): Observable<RecentTracks> {
   dump([`Getting ${pageNumber}. page of scrobbles`]);
 
   return defer(() =>
@@ -34,7 +51,7 @@ const getOnePageOfRecentTracks$ = function (pageNumber: number): Observable<Rece
     tap({
       next: () => dump([`${pageNumber}. page of scrobbles obtained!`]),
     }),
-    retryWhen(retryStrategy()),
+    retryWhen(retryStrategy(retryStrategySettings ?? defaultRetryStrategySettings)),
     delay(delayBetweenRequestForRecentTracks)
   );
 };

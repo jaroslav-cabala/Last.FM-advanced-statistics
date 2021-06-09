@@ -21,25 +21,24 @@ export const getCurrentTimeString = (): string => {
 
 export const dump = (messages: unknown[]): void => console.log(`${getCurrentTimeString()}: `, ...messages);
 
-export const retryStrategy =
-  (
-    retryStrategyArguments = {
-      maxTryAttemps: 3,
-      retryDelay: (retryAttempt: number) => Math.pow(1, retryAttempt) * 500,
-    }
-  ) =>
-  (attempts: any): Observable<number> => {
+export interface RetryStrategySettings {
+  maxTryAttempts: number;
+  retryDelay: (retryAttempt: number) => number;
+}
+
+export const retryStrategy: (args: RetryStrategySettings) => (attempts: any) => Observable<number> =
+  (retryStrategySettings: RetryStrategySettings) => (attempts) => {
     const errors: string[] = [];
     return attempts.pipe(
       mergeMap((error: Error, index: number) => {
         errors.push(error.message);
         const retryCount = index + 1;
 
-        if (retryCount > retryStrategyArguments.maxTryAttemps)
-          throw Error(`Request failed after ${retryStrategyArguments.maxTryAttemps} retry attempts.\n
+        if (retryCount > retryStrategySettings.maxTryAttempts)
+          throw Error(`Request failed after ${retryStrategySettings.maxTryAttempts} retry attempts.\n
               Original error messages: ${errors.map((err) => `[[${err}]]`)}`);
 
-        const retryDelay = retryStrategyArguments.retryDelay(retryCount);
+        const retryDelay = retryStrategySettings.retryDelay(retryCount);
         dump([`Retrying ${retryCount}. time in ${retryDelay}ms`]);
         return timer(retryDelay);
       })
