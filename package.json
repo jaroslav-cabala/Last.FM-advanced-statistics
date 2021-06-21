@@ -4,7 +4,7 @@
   "description": "An application that provides more detailed last.fm scrobbling statistics",
   "private": "true",
   "scripts": {
-    "clean-dist": "npx rimraf ./compiledJs, ./dist",
+    "clean-dist": "npx rimraf ./dist ./compiledJs/",
     "lint": "npx eslint app/src/",
     "lint-tests": "npx eslint app/src/**/*.test.ts",
     "lint-fix": "npx eslint app/src/ --fix",
