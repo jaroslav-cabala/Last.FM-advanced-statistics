@@ -1,13 +1,20 @@
 import { dump } from "../common";
 
-export const get = function (
-  uri: string,
-  additionalParams: Record<string, string>[] = []
-): Promise<Response> {
-  for (const param of additionalParams) {
-    uri += `&${param.name}=${param.value}`;
+type QueryParam = { name: string; value: string };
+
+type QueryParam2 = Record<"name" | "value", string>[];
+
+export const get = function (url: string, queryParams: QueryParam[] = []): Promise<Response> {
+  let urlToFetch = url;
+  if (!url.includes("?")) {
+    urlToFetch += "?";
+  } else if (!url.endsWith("?") && !url.endsWith("&")) {
+    urlToFetch += "&";
   }
-  return fetch(uri);
+
+  urlToFetch += queryParams.map((param: QueryParam) => `${param.name}=${param.value}`).join("&");
+
+  return fetch(urlToFetch);
 };
 
 /*

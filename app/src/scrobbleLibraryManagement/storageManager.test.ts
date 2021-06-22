@@ -8,10 +8,10 @@ describe("StorageManager", () => {
   });
 
   describe("addScrobbles()", () => {
-    let testMethodSpy: jest.SpyInstance;
+    let saveScrobblesSpy: jest.SpyInstance;
 
     beforeEach(() => {
-      testMethodSpy = jest.spyOn(storageManager, "saveScrobbles").mockName("saveScrobblesSpy");
+      saveScrobblesSpy = jest.spyOn(storageManager, "saveScrobbles").mockName("saveScrobblesSpy");
     });
 
     test("if list of scrobbles is not empty, inserts 10 new scrobbles at the start of the list", () => {
@@ -22,8 +22,8 @@ describe("StorageManager", () => {
 
       storageManager.addScrobbles(testScrobbles2);
 
-      expect(testMethodSpy).toHaveBeenCalledTimes(1);
-      expect(testMethodSpy).toHaveBeenCalledWith(expected);
+      expect(saveScrobblesSpy).toHaveBeenCalledTimes(1);
+      expect(saveScrobblesSpy).toHaveBeenCalledWith(expected);
     });
 
     test("if list of scrobbles is empty, adds 10 new scrobbles to the list", () => {
@@ -33,8 +33,8 @@ describe("StorageManager", () => {
 
       storageManager.addScrobbles(testScrobbles2);
 
-      expect(testMethodSpy).toHaveBeenCalledTimes(1);
-      expect(testMethodSpy).toHaveBeenCalledWith(testScrobbles2);
+      expect(saveScrobblesSpy).toHaveBeenCalledTimes(1);
+      expect(saveScrobblesSpy).toHaveBeenCalledWith(testScrobbles2);
     });
   });
 
