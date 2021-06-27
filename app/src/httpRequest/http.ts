@@ -2,8 +2,6 @@ import { dump } from "../common";
 
 type QueryParam = { name: string; value: string };
 
-type QueryParam2 = Record<"name" | "value", string>[];
-
 export const get = function (url: string, queryParams: QueryParam[] = []): Promise<Response> {
   let urlToFetch = url;
   if (!url.includes("?")) {

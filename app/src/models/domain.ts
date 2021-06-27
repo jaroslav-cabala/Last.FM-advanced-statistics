@@ -1,72 +1,89 @@
 import { getDateStringFromUts } from "../common";
 
-export type Scrobbles = ScrobbledTrack[];
-export class ScrobbledTrack {
-  constructor(
-    public readonly mbid: string,
-    public readonly name: string,
-    public readonly album: Album,
-    public readonly artist: Artist,
-    public readonly url: string,
-    public readonly date: string
-  ) {}
+export type Scrobbles = Scrobble[];
+export class Scrobble {
+  constructor(public readonly date: string, public readonly track: LastFmTrack) {}
 
-  static AreScrobblesEqual(scrobble1: ScrobbledTrack, scrobble2: ScrobbledTrack): boolean {
+  static AreScrobblesEqual(scrobble1: Scrobble, scrobble2: Scrobble): boolean {
     return (
       scrobble1.date === scrobble2.date &&
-      scrobble1.name === scrobble2.name &&
-      scrobble1.mbid === scrobble2.mbid &&
-      Album.AreAlbumsEqual(scrobble1.album, scrobble2.album) &&
-      Artist.AreArtistsEqual(scrobble1.artist, scrobble2.artist)
+      LastFmTrack.AreTracksEqual(scrobble1.track, scrobble2.track) &&
+      LastFmAlbum.AreAlbumsEqual(scrobble1.track.album, scrobble2.track.album) &&
+      LastFmArtist.AreArtistsEqual(scrobble1.track.artist, scrobble2.track.artist)
     );
   }
 }
 
-export class Album {
-  // releaseDate; //i guess i need to query musicBrainz, no longer in album.getInfo response from lastFm api
-  // image; // lastFm unreliable, should get it from somewhere else
-  // url; // from lastFm album.getInfo
+export class LastFmTrack {
+  constructor(
+    public readonly mbid: string,
+    public readonly name: string,
+    public readonly album: LastFmAlbum,
+    public readonly artist: LastFmArtist,
+    public readonly url: string,
+    public readonly duration: number
+  ) {}
+
+  static AreTracksEqual(track1: LastFmTrack, track2: LastFmTrack): boolean {
+    return (
+      track1.name === track2.name &&
+      track1.mbid === track2.mbid &&
+      track1.duration === track2.duration &&
+      LastFmAlbum.AreAlbumsEqual(track1.album, track2.album) &&
+      LastFmArtist.AreArtistsEqual(track1.artist, track2.artist)
+    );
+  }
+}
+
+export class LastFmAlbum {
   // genres;
   // duration;
   constructor(
     public readonly mbid: string,
     public readonly name: string,
-    public readonly artist: Artist,
+    public readonly artist: LastFmArtist,
     public readonly releaseDate: string = "",
     public readonly image: string = "",
     public readonly url: string = ""
   ) {}
 
-  static AreAlbumsEqual(album1: Album, album2: Album): boolean {
-    return album1.mbid === album2.mbid && album1.name === album2.name;
+  static AreAlbumsEqual(album1: LastFmAlbum, album2: LastFmAlbum): boolean {
+    return (
+      album1.mbid === album2.mbid &&
+      album1.name === album2.name &&
+      album1.releaseDate == album2.releaseDate &&
+      LastFmArtist.AreArtistsEqual(album1.artist, album2.artist)
+    );
   }
 }
 
-export class Artist {
-  // formationDate; // from musicBrainz
-  // country; // from musicBrainz
-  // image; // lastFm unreliable, should get it from somewhere else
-  // url; // from lastFm artist.getInfo
-  // genres;
+export class LastFmArtist {
   constructor(
     public readonly mbid: string,
     public readonly name: string,
     public readonly country: string = "",
+    public readonly formationYear = "",
     public readonly image: string = "",
-    public readonly url: string = ""
+    public readonly url: string = "",
+    public readonly genres: string[] = []
   ) {}
 
-  static AreArtistsEqual(artist1: Artist, artist2: Artist): boolean {
-    return artist1.mbid === artist2.mbid && artist1.name === artist2.name;
+  static AreArtistsEqual(artist1: LastFmArtist, artist2: LastFmArtist): boolean {
+    return (
+      artist1.mbid === artist2.mbid &&
+      artist1.name === artist2.name &&
+      artist1.country === artist2.country &&
+      artist1.formationYear === artist2.formationYear
+    );
   }
 }
 
 export class LocalStorageInfo {
   public readonly pagesDownloaded: number;
   public readonly scrobblesDownloaded: number;
-  public readonly latestStoredScrobble: ScrobbledTrack;
+  public readonly latestStoredScrobble: Scrobble;
   public readonly readFriendlyString: string;
-  constructor(scrobbles: ScrobbledTrack[], downloadedScrobbles: number) {
+  constructor(scrobbles: Scrobble[], downloadedScrobbles: number) {
     this.pagesDownloaded = Math.ceil(scrobbles.length / 200);
     this.scrobblesDownloaded = downloadedScrobbles;
     // this.scrobblesDownloaded = scrobbles.length;
@@ -83,4 +100,13 @@ export class User {
     public readonly totalScrobbles: number,
     public readonly url: string
   ) {}
+}
+
+export interface ArtistDetails {
+  country: string;
+  formationYear: string;
+}
+
+export interface AlbumDetails {
+  releaseDate: string;
 }

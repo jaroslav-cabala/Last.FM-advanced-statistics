@@ -1,7 +1,7 @@
 {
   "extends": "./tsconfig.json",
   "include": ["app/src/**/*"],
-  "exclude": ["app/src/**/test", "app/src/**/*.test.*"],
+  "exclude": ["app/src/**/test", "app/src/**/*.test.*", "app/src/files"],
   "compilerOptions": {
     "outDir": "compiledJs"
   }

@@ -1,7 +1,7 @@
 import { Subscription } from "rxjs";
 
 import { dump } from "../common";
-import { ScrobbledTrack, Scrobbles } from "../models/domain";
+import { Scrobble, Scrobbles } from "../models/domain";
 import { getScrobbles$, getScrobblesTest$ } from "./downloaders/scrobbles";
 import { getStorageStatusInfo } from "./storageManager";
 
@@ -77,12 +77,12 @@ const verifySuccessfulExtractionOfNewScrobbles = (
 
   let isFirstDroppedScrobbleEqualToLatestStoredScrobble = true;
   if (allDownloadedScrobbles.length !== newScrobblesCount) {
-    isFirstDroppedScrobbleEqualToLatestStoredScrobble = ScrobbledTrack.AreScrobblesEqual(
+    isFirstDroppedScrobbleEqualToLatestStoredScrobble = Scrobble.AreScrobblesEqual(
       alreadyDownloadedScrobbles[0],
       latestStoredScrobble
     );
   }
-  const isOldestNewScrobbleDifferentFromLatestStoredScrobble = !ScrobbledTrack.AreScrobblesEqual(
+  const isOldestNewScrobbleDifferentFromLatestStoredScrobble = !Scrobble.AreScrobblesEqual(
     newScrobbles[newScrobbles.length - 1],
     latestStoredScrobble
   );
